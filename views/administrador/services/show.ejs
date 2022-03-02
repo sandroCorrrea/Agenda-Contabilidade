@@ -1,0 +1,87 @@
+<%- include('../../../partials/Administrador/head.ejs') %> 
+<link rel="stylesheet" type="text/css" href="/css/servicos.css">
+<%- include('../../../partials/Administrador/head2.ejs') %> 
+<body>
+    <%- include('../../../partials/Administrador/nav.ejs') %>
+    <%- include('../../../partials/Administrador/arquivosSvg.ejs') %>
+    <div id="container">
+        <div class="container">
+            <button class="openbtn mt-3" onclick="openNav()">&#9776; Menu</button>
+            <div class="card">
+                <div class="card-header">
+                    <h1 class="display-4 fw-bold text-center">Todos os Serviços</h1>
+                    <hr>
+                    <a class="btn btn-primary btnCategorias" href="/admin/service">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-bag-plus" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M8 7.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0v-1.5H6a.5.5 0 0 1 0-1h1.5V8a.5.5 0 0 1 .5-.5z"></path>
+                            <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z"></path>
+                        </svg>
+                        Cadastrar Novo Serviço
+                    </a>
+                </div>
+                <div class="card-body">
+                    <div class="px-4 py-5" id="featured-3">
+                        <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
+                            <% if(Object.values(servicos).length === 0){ %>
+                                <div class="alert alert-secondary alert-dismissible fade show text-center" role="alert">
+                                    <h6 class="display-6">Não temos nenhum serviço cadastrado!</h6>
+                                    <p>
+                                        <a href="/admin/service">Clique aqui para realizar o cadastro de um serviço!</a> 
+                                    </p>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            <% }else{ %>
+                                <% servicos.forEach(servico => { %>
+                                    <div class="feature col">
+                                      <div class="feature-icon bg-primary bg-gradient">
+                                          <a href="#" class="linkModal" data-bs-toggle="modal" data-bs-target="#exampleModal<%=servico.id%>">
+                                            <svg class="bi" width="1em" height="1em"><use xlink:href="#people-circle"/></svg>
+                                          </a>
+                                      </div>
+                                      <h5><b><%=servico.nome%></b></h5>
+                                      <hr>
+                                      <h5>Apelido    : <%=servico.apelido%></h5>
+                                      <h5>Abreviatura: <%=servico.abreviatura%></h5>
+                                      <h5>Categoria  : <%=servico.categorium.nome%></h5>
+                                      <h5>Para       : <%=servico.cliente_categorium.nome%></h5>
+                                      <form action="/admin/service/excluir" method="post" onsubmit="confirmaExclusao(event)">
+                                        <button class="btn btn-danger" name="id" value="<%=servico.id%>">Excluir</button>
+                                        <a href="/admin/service/edita/<%=servico.id%> " class="btn btn-warning edit">Editar</a>
+                                      </form>
+                                    </div>
+                                    <div class="modal fade" id="exampleModal<%=servico.id%>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                            <h5 class="modal-title display-6" id="exampleModalLabel">Descrição do Serviço</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <pre>Nome:                         <%=servico.nome.toUpperCase()%></pre>
+                                                <pre>Apelido:                      <%=servico.apelido%></pre>
+                                                <pre>Abreviatura:                  <%=servico.abreviatura%></pre>
+                                                <pre>Categoria:                    <%=servico.categorium.nome%></pre>
+                                                <pre>Para:                         <%=servico.cliente_categorium.nome%></pre>
+                                                <pre>Data de Criação:              <%=agenda.TrataData(servico.createdAt)%></pre>
+                                                <pre>Hora da Criação:              <%=agenda.TrataHora(servico.createdAt)%></pre>
+                                                <hr>
+                                                <pre>Data da Última Alteração:     <%=agenda.TrataData(servico.updatedAt)%></pre>
+                                                <pre>Hora da Última Alteração:     <%=agenda.TrataHora(servico.updatedAt)%></pre>
+                                            </div>
+                                            <div class="modal-footer">
+                                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                <% }); %> 
+                            <% } %> 
+                        </div>
+                      </div>
+                    </div>
+                </div>    
+            </div>
+        </div>
+    </div>
+</body>
+<%- include('../../../partials/Administrador/footer.ejs') %>

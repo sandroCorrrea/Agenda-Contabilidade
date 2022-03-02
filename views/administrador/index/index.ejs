@@ -1,0 +1,32 @@
+<%- include('../../../partials/Administrador/head.ejs') %> 
+<link rel="stylesheet" type="text/css" href="">
+<%- include('../../../partials/Administrador/head2.ejs') %> 
+<body>
+    <%- include('../../../partials/Administrador/nav.ejs') %>
+    <div id="container">
+      <div class="container">
+        <button class="openbtn mt-3" onclick="openNav()">&#9776; Menu</button>
+        <div class="px-4 pt-5 text-center border-bottom">
+            <h1 class="display-4 fw-bold">Painel Administrativo</h1>
+            <div class="col-lg-6 mx-auto">
+              <p class="lead mb-4">Olá Seja bem vindo ao painel administrativo da <b>Agenda Contabilidade</b> esse ambiente é focado no desenvolvimento de serviços que modificados aqui, terão impacto direto na área do <b>cliente</b>.</p>
+              <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
+                <a class="btn btn-primary btn-lg px-4 me-sm-3 p-2">
+                    <i class="bi bi-person-workspace"></i>      Suporte
+                </a>
+                <a type="button" class="btn btn-outline-secondary btn-lg px-4" href="/admin/administradores">
+                  <i class="bi bi-person-check"></i>          Administradores
+                </a>
+              </div>
+            </div>
+            <div class="overflow-hidden" style="max-height: 30vh;">
+              <div class="container px-5">
+                <img src="/img/imagemPrincipalAdmin.png" class="img-fluid border rounded-3 shadow-lg mb-4" alt="Example image" width="700" height="500" loading="lazy">
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+    <%- include('../../../partials/Administrador/footerDate.ejs') %>
+</body>
+<%- include('../../../partials/Administrador/footer.ejs') %>

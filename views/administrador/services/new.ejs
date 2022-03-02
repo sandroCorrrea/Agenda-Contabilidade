@@ -1,0 +1,70 @@
+<%- include('../../../partials/Administrador/head.ejs') %> 
+<link rel="stylesheet" type="text/css" href="/css/servicos.css">
+<%- include('../../../partials/Administrador/head2.ejs') %> 
+<body>
+    <%- include('../../../partials/Administrador/nav.ejs') %>
+    <div id="container">
+        <div class="container">
+            <button class="openbtn mt-3" onclick="openNav()">&#9776; Menu</button>
+            <div class="card">
+                <div class="card-header">
+                    <h1 class="display-4 fw-bold text-center">Cadastrar Novo Serviço</h1>
+                </div>
+                <div class="card-body">
+                    <form action="/admin/servico" method="post">
+                        <div class="row g-3">
+                            <div class="col-md">
+                                <div class="form-floating">
+                                    <input type="text" name="nome" placeholder=" " class="form-control" required>
+                                    <label>Nome</label>
+                                </div>
+                            </div>
+                            <div class="col-md">
+                                <div class="form-floating">
+                                    <input type="text" name="abreviatura" placeholder=" " class="form-control">
+                                    <label>Abreviatura</label>
+                                </div>
+                            </div>
+                            <div class="col-md">
+                                <div class="form-floating">
+                                    <input type="text" name="apelido" placeholder=" " class="form-control">
+                                    <label>Apelido</label>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row g-2">
+                            <div class="col-md">
+                                <label>Selecione uma categoria:</label>
+                                <div class="form-floating">
+                                    <select class="form-select" id="floatingSelect" name="agendaCategoriumId" required>
+                                      <% categorias.forEach(categoria => { %>
+                                        <option value="<%=categoria.id%>"><%=categoria.nome%></option>
+                                      <% }) %> 
+                                    </select>
+                                    <label for="floatingSelect">Categorias de Serviço</label>
+                                </div>
+                            </div>
+                            <div class="col-md">
+                                <label>Para Clientes De Categoria:</label>
+                                <div class="form-floating">
+                                    <select class="form-select" id="floatingSelect" name="clienteCategoriumId" required>
+                                      <% categoriaUser.forEach(user => { %>
+                                        <option value="<%=user.id%>"><%=user.nome%></option>
+                                      <% }) %> 
+                                    </select>
+                                    <label for="floatingSelect">Categorias de Serviço</label>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="d-grid col-6 gap-2 mx-auto">
+                            <button class="btn btn-success">Cadastrar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<%- include('../../../partials/Administrador/footer.ejs') %>

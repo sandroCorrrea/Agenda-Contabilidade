@@ -1,0 +1,99 @@
+<%- include('../../../partials/Administrador/head.ejs') %> 
+<link rel="stylesheet" type="text/css" href="/css/postagem.css">
+<%- include('../../../partials/Administrador/head2.ejs') %> 
+<body>
+    <%- include('../../../partials/Administrador/nav.ejs') %>
+        <div id="container">
+            <div class="container">
+                <button class="openbtn mt-3" onclick="openNav()">&#9776; Menu</button>
+                <div class="card-header">
+                    <h1 class="display-4 fw-bold text-center">Postagens Publicadas</h1>
+                    <hr>
+                    <a class="btn btn-primary btnCategorias" href="/admin/postagem">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-bag-plus" viewBox="0 0 16 16">
+                          <path fill-rule="evenodd" d="M8 7.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0v-1.5H6a.5.5 0 0 1 0-1h1.5V8a.5.5 0 0 1 .5-.5z"></path>
+                          <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z"></path>
+                      </svg>
+                      Realizar Nova Postagem
+                    </a>
+                </div>
+                <div class="card-body mt-4">
+                    <% if(Object.values(postagens).length === 0){ %>
+                        <div class="alert alert-secondary alert-dismissible fade show text-center" role="alert">
+                          <h6 class="display-6">Não temos nenhuma postagem publicada!</h6>
+                          <p>
+                              <a href="/admin/postagem">Clique aqui para realizar a publicação de uma postagem!</a> 
+                          </p>
+                          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    <% }else{ %>
+                        <% postagens.forEach(post => { %>
+                            <div class="col">
+                                <div class="card card-cover h-100 overflow-hidden text-white bg-primary rounded-5 shadow-lg cardPost">
+                                  <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
+                                    <h2 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold"><%=post.titulo%></h2>
+                                    <ul class="d-flex list-unstyled mt-auto">
+                                        <li class="me-auto">
+                                            <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal<%=post.id%>">
+                                                <img src="/img/logo.png" alt="Agenda" width="60" height="60" class="rounded-circle border border-white">
+                                            </a>
+                                        </li>
+                                        <li class="d-flex align-items-center me-3">
+                                            <form action="/admin/post/excluir" method="post" onsubmit="confirmaExclusao(event)">
+                                                <button class="btn btn-danger" name="id" value="<%=post.id%>">
+                                                    <i class="bi bi-trash"></i>               Excluir
+                                                </button>
+                                            </form>
+                                        </li>
+                                         <li class="d-flex align-items-center">     
+                                            <a href="/admin/postagem/<%=post.id%> " class="btn btn-warning">
+                                                <i class="bi bi-pencil-square"></i>       Editar             
+                                            </a>
+                                        </li>
+                                    </ul>
+                                  </div>
+                                </div>
+                            </div> 
+                            <br>
+                            <!-- Modal -->
+                            <div class="modal fade" id="exampleModal<%=post.id%>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                    <h5 class="modal-title display-6" id="exampleModalLabel">Informações</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="list-group">
+                                            <pre>Título:                       <%=post.titulo%></pre>
+                                            <% if(post.dataInicio == null || post.dataInicio == undefined || post.dataInicio == ""){ %>
+                                                <pre>Início da Exibição:           Indeterminada</pre>
+                                            <% }else{ %>
+                                                <pre>Início da Exibição:           <%=agenda.TrataDataBanco(post.dataInicio)%></pre>
+                                            <% } %> 
+                                            <% if(post.dataFim == null || post.dataFim == undefined || post.dataFim == ""){ %>
+                                                <pre>Fim da Exibição:              Indeterminada</pre>
+                                            <% }else{ %>
+                                                <pre>Fim da Exibição:              <%=agenda.TrataDataBanco(post.dataFim)%></pre>
+                                            <% } %> 
+                                            <pre>Data de Criação:              <%=agenda.TrataData(post.createdAt)%></pre>
+                                            <pre>Hora da Criação:              <%=agenda.TrataHora(post.createdAt)%></pre>
+                                            <hr>
+                                            <pre>Data da Última Alteração:     <%=agenda.TrataData(post.updatedAt)%></pre>
+                                            <pre>Hora da Última Alteração:     <%=agenda.TrataHora(post.updatedAt)%></pre>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                        <% }) %>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+</body>
+<%- include('../../../partials/Administrador/footer.ejs') %>
+<script type="text/javascript" src="/js/eventos.js"></script>

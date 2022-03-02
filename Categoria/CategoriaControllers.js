@@ -1,0 +1,104 @@
+const express         = require('express');
+const router          = express.Router();
+const CategoriaAgenda = require('../src/CategoriaAgenda');
+const CategoriaUser   = require('./CategoriaUser')
+const Categoria       = require('./Categoria');
+const Agenda          = require('../src/Agenda');
+
+// INSTÂNCIAS USADAS
+const categoria = new CategoriaAgenda();
+const agenda    = new Agenda();
+
+router.get('/admin/categoria', (req, res) => {
+    res.render('administrador/categorias/new');
+});
+
+router.post('/admin/categoria', (req, res) => {
+    var {nome} = req.body;
+    // REALIZO A INSERÇÃO DA CATEGORIA NO BANCO
+    categoria.InsereCategoria(res, nome, Categoria);
+});
+
+router.get('/admin/categorias', (req, res) => {
+    res.render('administrador/categorias/show');
+});
+
+router.post('/admin/categoria/excluir', (req, res) => {
+    var {id} = req.body;
+    // APAGO A CATEGORIA NO BANCO
+    categoria.ExcluirCategoria(res, id, Categoria);    
+});
+
+router.get('/admin/categoria/:id', (req, res) => {
+    var {id} = req.params;
+    // CRIA UM ARQUIVO PARA A EDIÇÃO DO DOCUMENTO
+    categoria.CriaArquivoParaEdicao(res, id, "categorias", Categoria);
+});
+
+router.post('/admin/categoria/edit', (req, res) => {
+    var {nome, id} = req.body;
+    // EDITA DADOS DE UMA CATEGORIA
+    categoria.EditaCategoria(res, id, nome, Categoria);
+});
+
+// REQUISIÇÕES VIA AJAX
+router.get('/admin/categoriaServico', (req, res) => {
+    res.render('administrador/categorias/categoriaServico');
+});
+
+router.get('/admin/categoriaUsuario', (req, res) => {
+    res.render('administrador/categorias/categoriaUsuario');
+});
+
+router.get('/admin/categoriasUsuario', (req, res) => {
+    CategoriaUser.findAll({
+        order:[['id', 'DESC']]
+    }).then(categorias => {
+        res.render('administrador/categorias/todasCategoriasUsuario', {
+            categorias: categorias,
+            agenda: agenda,
+        });
+    }).catch(erro => [
+        console.log(erro)
+    ]);
+});
+
+router.get('/admin/categoriasServico', (req, res) => {
+    Categoria.findAll({
+        order:[['id', 'DESC']]
+    }).then(categorias => {
+        res.render('administrador/categorias/todasCategoriasServico', {
+            categorias: categorias,
+            agenda: agenda,
+        });
+    }).catch(erro => [
+        console.log(erro)
+    ]);
+});
+
+//---------------------------------------------------------- CATEGORIAS DE CLIENTES
+router.post('/admin/categoria/cliente', (req, res) => {
+    var {nome} = req.body;
+    // REALIZO A INSERÇÃO DA CATEGORIA NO BANCO
+    categoria.InsereCategoria(res, nome, CategoriaUser);
+});
+
+router.post('/admin/categoria/cliente/excluir', (req, res) => {
+    var {id} = req.body;
+    // APAGO A CATEGORIA NO BANCO
+    categoria.ExcluirCategoria(res, id, CategoriaUser);    
+});
+
+router.get('/admin/categoria/cliente/:id', (req, res) => {
+    var {id} = req.params;
+    // CRIA UM ARQUIVO PARA A EDIÇÃO DO DOCUMENTO
+    categoria.CriaArquivoParaEdicaoCliente(res, id, "categorias", CategoriaUser);
+});
+
+router.post('/admin/categoria/edit/cliente', (req, res) => {
+    var {nome, id} = req.body;
+    // EDITA DADOS DE UMA CATEGORIA
+    categoria.EditaCategoria(res, id, nome, CategoriaUser);
+});
+
+module.exports = router;

@@ -1,0 +1,65 @@
+const express       = require('express');
+const router        = express.Router();
+const ServicoModal  = require('./Servico');
+const Categoria     = require('../Categoria/Categoria');
+const servicoAgenda = require('../src/Servico');
+const Agenda        = require('../src/Agenda');
+const CategoriaUser = require('../Categoria/CategoriaUser');
+
+// INSTÂNCIAS USADAS
+const servico = new servicoAgenda();
+const agenda  = new Agenda();
+
+router.get('/admin/service', (req, res) => {
+    Categoria.findAll().then(categorias => {
+        CategoriaUser.findAll().then(categoriaUser => {
+            res.render('administrador/services/new', {
+                categorias   : categorias,
+                categoriaUser: categoriaUser
+            });
+        });
+    });
+});
+
+router.post('/admin/servico', (req, res) => {
+    var {nome, apelido, abreviatura, agendaCategoriumId, clienteCategoriumId} = req.body;
+
+    servico.InsereServico(res, ServicoModal, nome, abreviatura, apelido, agendaCategoriumId, clienteCategoriumId);
+});
+
+router.get('/admin/services', (req, res) => {
+    ServicoModal.findAll({
+        order:[['id', 'DESC']],
+        include: [
+            {model: Categoria},
+            {model: CategoriaUser},
+        ],
+    }).then(servicos => {
+        res.render('administrador/services/show', {
+            servicos: servicos,
+            agenda: agenda,
+        })
+    }).catch(erro => {
+        console.log(erro);
+    });
+});
+
+router.post('/admin/service/excluir', (req, res) => {
+    var {id} = req.body;
+
+    servico.ExcluiServico(res, ServicoModal, id);
+});
+
+router.get('/admin/service/edita/:id', (req, res) => {
+    var {id} = req.params;
+
+    servico.CriaArquivoParaEdicao(res, ServicoModal, id);
+});
+
+router.post('/admin/servico/edita', (req, res) => {
+    var {nome, abreviatura, apelido, agendaCategoriumId, id, clienteCategoriumId} = req.body;
+
+    servico.EditaServico(nome, abreviatura, apelido, agendaCategoriumId, ServicoModal, res, id, clienteCategoriumId);
+});
+
+module.exports = router;

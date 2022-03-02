@@ -1,0 +1,41 @@
+<%- include('../../../partials/Administrador/head.ejs') %> 
+<link rel="stylesheet" type="text/css" href="/css/categoria.css">
+<%- include('../../../partials/Administrador/head2.ejs') %> 
+<body>
+    <%- include('../../../partials/Administrador/nav.ejs') %>
+        <div id="container">
+          <div class="container">
+            <button class="openbtn mt-3" onclick="openNav()">&#9776; Menu</button>
+            <div class="card">
+              <div class="card-header">
+                <h1 class="display-4 fw-bold text-center">Categorias</h1>
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="card">
+                    <div class="card-body">
+                      <h5 class="card-title display-6">Cadastrar Categoria de Serviço</h5>
+                      <div class="d-grid gap-2 col-6 mx-auto">
+                        <a class="btn btn-primary" onclick="requisicaoPagina('/admin/categoriaServico')">Cadastrar</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="card">
+                    <div class="card-body">
+                      <h5 class="card-title display-6">Cadastrar Categoria do Cliente</h5>
+                      <div class="d-grid gap-2 col-6 mx-auto">
+                        <a class="btn btn-primary" onclick="requisicaoPagina('/admin/categoriaUsuario')">Cadastrar</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>   
+            <div class="card" id="categoriaServico"></div>
+          </div>
+        </div>
+</body>
+<%- include('../../../partials/Administrador/footer.ejs') %>
+<script type="text/javascript" src="/js/categorias.js"></script>

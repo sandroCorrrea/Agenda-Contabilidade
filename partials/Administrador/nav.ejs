@@ -1,0 +1,138 @@
+<div id="mySidebar" class="sidebar">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  <a href="/admin"><img src="/img/logo.png" alt="Imagem do menu principal" class="imgMenu m-3"></a>
+  <ul class="list-unstyled ps-0 mt-1">
+    <li class="mb-1">
+      <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#categoria-collapse" aria-expanded="false">
+        <i class="bi bi-award" style="font-size: 1.5rem;"></i>
+        <div class="itens-sidebar">
+          Categorias
+        </div>
+      </button>
+      <div class="collapse" id="categoria-collapse">
+        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+          <li>
+            <a href="/admin/categoria" class="link-dark rounded"><i class="bi bi-bookmark-check"></i>
+              <div class="itens-sidebar">
+                Cadastrar
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="/admin/categorias" class="link-dark rounded"><i class="bi bi-bookmarks-fill"></i>
+              <div class="itens-sidebar">
+                Mostrar
+              </div>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </li>
+    <li class="mb-1">
+      <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="false">
+        <i class="bi bi-wallet-fill" style="font-size: 1.5rem;"></i>
+        <div class="itens-sidebar">
+          Serviços
+        </div>
+      </button>
+      <div class="collapse" id="home-collapse">
+        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+          <li>
+            <a href="/admin/service"  class="link-dark rounded"><i class="bi bi-journal-plus"></i>
+              <div class="itens-sidebar">
+                Cadastrar
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="/admin/services" class="link-dark rounded"><i class="bi bi-clipboard-check"></i>
+              <div class="itens-sidebar">
+                Mostrar
+              </div>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </li>
+    <li class="mb-1">
+      <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false">
+        <i class="bi bi-person-check-fill" style="font-size: 1.5rem;"></i>
+        <div class="itens-sidebar">
+          Administradores
+        </div>
+      </button>
+      <div class="collapse" id="dashboard-collapse">
+        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+          <li><a href="/admin/new"       class="link-dark rounded"><i class="bi bi-person"></i>
+            <div class="itens-sidebar">
+              Cadastrar
+            </div>
+          <li><a href="/admin/administradores" class="link-dark rounded"><i class="bi bi-people"></i>
+            <div class="itens-sidebar">
+              Mostrar
+            </div>
+          </a></li>
+        </ul>
+      </div>
+    </li>
+    <li class="mb-1">
+      <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#orders-collapse" aria-expanded="false">
+        <i class="bi bi-image-fill" style="font-size: 1.5rem;"></i>
+        <div class="itens-sidebar">
+          Postagens
+        </div>
+      </button>
+      <div class="collapse" id="orders-collapse">
+        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+          <li><a href="/admin/postagem"  class="link-dark rounded"><i class="bi bi-file-earmark-plus"></i>
+            <div class="itens-sidebar">
+              Nova Postagem
+            </div>
+          </a></li>
+          <li><a href="/admin/postagens" class="link-dark rounded"><i class="bi bi-images"></i>
+            <div class="itens-sidebar">
+              Mostrar
+            </div>
+          </a></li>
+        </ul>
+      </div>
+    </li>
+    <li class="mb-1">
+      <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#clientes-collapse" aria-expanded="false">
+        <i class="bi bi-people" style="font-size: 1.5rem;"></i>
+        <div class="itens-sidebar">
+          Clientes
+        </div>
+      </button>
+      <div class="collapse" id="clientes-collapse">
+        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+          <li><a href="/admin/clientes" class="link-dark rounded"><i class="bi bi-person-workspace"></i>
+            <div class="itens-sidebar">
+              Mostar
+            </div>
+          </a></li>
+          <li><a href="/admin/suporte/cliente" class="link-dark rounded"><i class="bi bi-headset"></i>
+            <div class="itens-sidebar">
+              Suporte Cliente
+            </div>
+          </a></li>
+        </ul>
+      </div>
+    </li>
+    <li class="border-top my-3"></li>
+    <li class="mb-1">
+      <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#account-collapse" aria-expanded="false">
+        <i class="bi bi-person-bounding-box" style="font-size: 1.5rem;"></i>
+        <div class="itens-sidebar">
+          Administrador
+        </div>
+      </button>
+      <div class="collapse" id="account-collapse">
+        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+          <li><a href="#" class="link-dark rounded"><i class="bi bi-eye"></i>Informações</a></li>
+          <li><a href="/admin/userAdmin/logout" class="link-dark rounded"><i class="bi bi-box-arrow-left"></i>Sair</a></li>
+        </ul>
+      </div>
+    </li>
+  </ul>
+</div>

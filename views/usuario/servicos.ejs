@@ -1,0 +1,48 @@
+<%- include('../../partials/usuario/head') %>
+    <title>Agenda Contabilidade</title>
+    <link rel="stylesheet" type="text/css" href="/css/servicos_user.css">
+<%- include('../../partials/usuario/head2') %> 
+<body>
+  <%- include('../../partials/usuario/nav') %> 
+    <div class="container px-4 py-5" id="custom-cards"> 
+        <div class="card">
+            <div class="card-header">
+                <h6 class="display-4 text-center fw-bold">Serviços Disponíveis!</h6>
+            </div>
+            <div class="card-body">
+                <% if(Object.values(servicos).length===0){ %>
+                    <div class="alert alert-secondary alert-dismissible fade show text-center" role="alert">
+                        <h6 class="display-6">Não temos nenhum serviço cadastrado!</h6>
+                        <a href="#">
+                            <i class="bi bi-emoji-frown" style="font-size: 4rem; color: black;"></i>
+                        </a>
+                        <p>
+                            <a href="/">Clique aqui para voltar ao menu principal!</a> 
+                        </p>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                <% }else{ %>
+                    <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5">
+                        <% servicos.forEach(servico => { %>
+                            <div class="col">
+                                <div class="card card-cover h-100 overflow-hidden text-white bg-dark rounded-5 shadow-lg" style="background-image: url('/img/servicos_user.jpg'); background-position: 20%;">
+                                  <div class="d-flex flex-column h-100 p-5 pb-3 text-dark text-shadow-1">
+                                    <h2 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold"><%=servico.nome%> </h2>
+                                    <ul class="d-flex list-unstyled mt-auto">
+                                      <li class="me-auto">
+                                        <img src="/img/logo.png" alt="Logo" width="60" height="60" class="rounded-circle border border-white">
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
+                            </div>
+                        <% }); %>
+                    </div>
+                <% } %>
+            </div>
+        </div>
+    </div>
+    <%- include('../../partials/usuario/footer2') %> 
+</body>
+<%- include('../../partials/usuario/footer1') %> 
+

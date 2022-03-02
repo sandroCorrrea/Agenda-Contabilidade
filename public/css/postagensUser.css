@@ -1,0 +1,19 @@
+.card{
+    margin-top: 20vh;
+    background: none;
+    border: none;
+}
+.card-body{
+    background: none;
+    border: none;
+}
+.card-header{
+    background: none;
+    border: none;
+}
+.alert-dismissible{
+    margin-bottom: 20vh;
+}
+.postagens{
+    margin-bottom: 20vh;
+}

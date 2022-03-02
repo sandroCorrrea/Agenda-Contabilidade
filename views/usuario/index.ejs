@@ -1,0 +1,86 @@
+<%- include('../../partials/usuario/head') %> 
+  <title>Agenda Contabilidade</title>
+<%- include('../../partials/usuario/head2') %> 
+<body>
+  <%- include('../../partials/usuario/nav') %> 
+  <div class="container"> 
+    <section class="py-5 text-center sectionLogo">
+      <div class="row py-lg-5">
+        <div class="col-lg-6 col-md-8 mx-auto">
+          <h1 class="fw-bold">AGENDA CONTABILIDADE</h1>
+          <p class="lead text-muted">Somos uma empresa atuando no ramo da <b>Contabilidade</b>, buscando sempre <b>inovar</b> e trazer uma faciliadade maior para nosso cliente, como por exemplo alguns de nossos <b>Serviços</b> de forma <b>Remota</b>.</p>
+          <p>
+            <a href="/login" class="btn btn-primary my-2">Solicitar Serviço</a>
+            <a href="/servicos" class="btn btn-secondary my-2">Ver Lista de Serviços</a>
+          </p>
+        </div>
+      </div>
+    </section>
+    <div id="custom-cards">
+      <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4">
+        <div class="col">
+          <div class="card card-cover h-100 overflow-hidden text-white bg-dark rounded-5 shadow-lg" style="background-image: url('/img/money.jpg');">
+            <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
+              <h2 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">Credibilidade</h2>
+              <ul class="d-flex list-unstyled mt-auto">
+                <li class="me-auto">
+                  <img src="/img/logo.png" alt="AGENDA C." width="40" height="40" class="rounded-circle border border-white">
+                </li>
+                <li class="d-flex align-items-center me-3">
+                  <svg class="bi me-2" width="1em" height="1em"><use xlink:href="#geo-fill"/></svg>
+                  <small>AGENDA C.</small>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+  
+        <div class="col">
+          <div class="card card-cover h-100 overflow-hidden text-white bg-dark rounded-5 shadow-lg" style="background-image: url('/img/escritorio.jpg');">
+            <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
+              <h2 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">Simplicidade</h2>
+              <ul class="d-flex list-unstyled mt-auto">
+                <li class="me-auto">
+                  <img src="/img/logo.png" alt="AGENDA C." width="40" height="40" class="rounded-circle border border-white">
+                </li>
+                <li class="d-flex align-items-center me-3">
+                  <svg class="bi me-2" width="1em" height="1em"><use xlink:href="#geo-fill"/></svg>
+                  <small>AGENDA C.</small>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+  
+        <div class="col">
+          <div class="card card-cover h-100 overflow-hidden text-white bg-dark rounded-5 shadow-lg" style="background-image: url('/img/busca.jpg');">
+            <div class="d-flex flex-column h-100 p-5 pb-3 text-shadow-1">
+              <h2 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">Agilidade</h2>
+              <ul class="d-flex list-unstyled mt-auto">
+                <li class="me-auto">
+                  <img src="/img/logo.png" alt="AGENDA C." width="40" height="40" class="rounded-circle border border-white">
+                </li>
+                <li class="d-flex align-items-center me-3">
+                  <svg class="bi me-2" width="1em" height="1em"><use xlink:href="#geo-fill"/></svg>
+                  <small>AGENDA C.</small>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="px-4 py-5 my-5 text-center">
+      <img class="d-block mx-auto mb-4" src="/img/logo.png" alt="" width="72" height="72">
+      <h1 class="display-5 fw-bold">Interesse ?</h1>
+      <div class="col-lg-6 mx-auto">
+        <p class="lead mb-4">Quer se tornar um Cliente ? Clique no botão a seguir e faça seu cadastro <b>Gratuitamente</b>, caso tenha interesse em nossos serviços, um profissional da equipe <b>AGENDA</b> entrará em contato.</p>
+        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+          <a class="btn btn-primary btn-lg px-4 gap-3" href="/login">Tenho Interesse</a>
+        </div>
+      </div>
+    </div>  
+  </div>
+  <%- include('../../partials/usuario/footer2') %> 
+</body>
+<%- include('../../partials/usuario/footer1') %> 

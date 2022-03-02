@@ -1,0 +1,122 @@
+<%- include('../../../partials/Administrador/head.ejs') %> 
+<link rel="stylesheet" type="text/css" href="/css/admin.css">
+<%- include('../../../partials/Administrador/head2.ejs') %> 
+<body>
+    <%- include('../../../partials/Administrador/nav.ejs') %>
+        <div id="container">
+            <div class="container">
+                <button class="openbtn mt-3" onclick="openNav()">&#9776; Menu</button>
+                <div class="card-header">
+                    <h1 class="display-4 fw-bold text-center">Administradores Cadastrados</h1>
+                    <hr>
+                    <a class="btn btn-primary btnCategorias" href="/admin/new">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-bag-plus" viewBox="0 0 16 16">
+                          <path fill-rule="evenodd" d="M8 7.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0v-1.5H6a.5.5 0 0 1 0-1h1.5V8a.5.5 0 0 1 .5-.5z"></path>
+                          <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z"></path>
+                      </svg>
+                      Cadastrar Novo Administrador
+                    </a>
+                </div>
+                <div class="card-body mt-4">
+                    <% if(Object.values(administradores).length === 0){ %>
+                        <div class="alert alert-secondary alert-dismissible fade show text-center" role="alert">
+                          <h6 class="display-6">Não temos nenhum Administrador cadastrado!</h6>
+                          <p>
+                              <a href="/admin/new">Clique aqui para realizar o cadastro de uma Administrador!</a> 
+                          </p>
+                          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    <% }else{ %>
+                        <div class="row row-cols-1 row-cols-md-3 g-4 mt-5">
+                            <% administradores.forEach(admin => { %>
+                                <% if(admin.nome == "Cliente" && admin.cpf == "111.111.111-11"){ %>
+                                    <div class="col">
+                                        <div class="card m-3">
+                                            <% if(admin.foto == false){ %>
+                                            <a>
+                                                <img src="/img/fotoAdmin.png" id="imagemAdm">
+                                            </a>
+                                            <% }else{ %>
+                                            <a>
+                                                <img src="/img/admin/<%=admin.foto%>" id="imagemAdm">
+                                            </a>
+                                            <% } %> 
+                                            <div class="card-body text-dark">
+                                                <h6 class="display-6"><%=admin.nome%></h6>
+                                                <hr>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <% }else{ %>
+                                    <div class="col">
+                                        <div class="card m-3">
+                                            <% if(admin.foto == false){ %>
+                                            <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal<%=admin.id%>">
+                                                <img src="/img/fotoAdmin.png" id="imagemAdm">
+                                            </a>
+                                            <% }else{ %>
+                                            <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal<%=admin.id%>">
+                                                <img src="/img/admin/<%=admin.foto%>" id="imagemAdm">
+                                            </a>
+                                            <% } %> 
+                                            <div class="card-body text-dark">
+                                                <h6 class="display-6"><%=admin.nome%></h6>
+                                                <hr>
+                                                <form method="post" action="/admin/excluir" onsubmit="confirmaExclusao(event)">
+                                                    <button class="btn btn-danger" name="id" value="<%=admin.id%>">
+                                                        <i class="bi bi-trash"></i>               Excluir
+                                                    </button>
+                                                    <a href="/admin/editar/<%=admin.id%>" class="btn btn-warning">
+                                                        <i class="bi bi-pencil-square"></i>       Editar
+                                                    </a>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="exampleModal<%=admin.id%>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-scrollable">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                            <h5 class="modal-title display-6" id="exampleModalLabel">Informações</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="list-group">
+                                                    <pre>Nome:                         <%=admin.nome%></pre>
+                                                    <pre>Sobrenome:                    <%=admin.sobrenome%></pre>
+                                                    <pre>Cpf:                          <%=agenda.OcultaCpf(admin.cpf)%></pre>
+                                                    <pre>Rg:                           <%=agenda.OcultaRg(admin.rg)%></pre>
+                                                    <pre>Cep:                          <%=admin.cep%></pre>
+                                                    <pre>Rua:                          <%=admin.rua%></pre>
+                                                    <pre>Bairro:                       <%=admin.bairro%></pre>
+                                                    <pre>Cidade:                       <%=admin.cidade%></pre>
+                                                    <pre>Estado:                       <%=admin.estado%></pre>
+                                                    <pre>Nascimento:                   <%=admin.dataNascimento%></pre>
+                                                    <pre>E-mail:                       <%=admin.email%></pre>
+                                                    <pre>Tipo Usuário:                 <%=admin.tipoUsuario%></pre>
+                                                    <pre>Celular:                      <%=admin.celular%></pre>
+                                                    <pre>Celular:                      <%=admin.celular%></pre>
+                                                    <pre>Data de Criação:              <%=agenda.TrataData(admin.createdAt)%></pre>
+                                                    <pre>Hora da Criação:              <%=agenda.TrataHora(admin.createdAt)%></pre>
+                                                    <hr>
+                                                    <pre>Data da Última Alteração:     <%=agenda.TrataData(admin.updatedAt)%></pre>
+                                                    <pre>Hora da Última Alteração:     <%=agenda.TrataHora(admin.updatedAt)%></pre>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                <% } %> 
+                            <% }) %> 
+                        </div>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+</body>
+<%- include('../../../partials/Administrador/footer.ejs') %>
+<script type="text/javascript" src="/js/eventos.js"></script>

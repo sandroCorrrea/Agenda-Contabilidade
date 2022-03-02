@@ -1,0 +1,44 @@
+<%- include('../../partials/usuario/head') %> 
+  <title>Agenda Contabilidade</title>
+  <link rel="stylesheet" type="text/css" href="/css/erroCadastro.css">
+<%- include('../../partials/usuario/head2') %> 
+<body>
+  <%- include('../../partials/usuario/nav') %> 
+  <div class="container"> 
+      <div class="card">
+          <% if(typeof(email) !== 'undefined'){ %>
+            <div class="card-body">
+                <div class="alert alert-secondary alert-dismissible fade show text-center" role="alert">
+                    <h6 class="display-6">Os dados informados de <b>E-mail</b> já existem Cadastrados!</h6>
+                    <a href="#">
+                        <i class="bi bi-emoji-frown" style="font-size: 4rem; color: black;"></i>
+                    </a>
+                    <p>
+                        <div class="d-grid gap-2 col-6 mx-auto botaoLogin">
+                            <a class="btn btn-primary" href="/login">Fazer Login</a>
+                        </div>
+                    </p>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </div>
+          <% }if(typeof(email) === 'undefined'){ %>
+            <div class="card-body">
+                <div class="alert alert-secondary alert-dismissible fade show text-center" role="alert">
+                    <h6 class="display-6">Os dados informados de <b>CPF</b> já existem Cadastrados!</h6>
+                    <a href="#">
+                        <i class="bi bi-emoji-frown" style="font-size: 4rem; color: black;"></i>
+                    </a>
+                    <p>
+                        <div class="d-grid gap-2 col-6 mx-auto botaoLogin">
+                            <a class="btn btn-primary" href="/login">Fazer Login</a>
+                        </div>
+                    </p>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </div>
+          <% } %>
+      </div>
+  </div>
+  <%- include('../../partials/usuario/footer2') %> 
+</body>
+<%- include('../../partials/usuario/footer1') %> 

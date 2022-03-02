@@ -1,0 +1,54 @@
+<%- include('../../../partials/Administrador/head.ejs') %> 
+<link rel="stylesheet" type="text/css" href="/css/postagem.css">
+<%- include('../../../partials/Administrador/head2.ejs') %> 
+<body>
+    <%- include('../../../partials/Administrador/nav.ejs') %>
+        <div id="container">
+          <div class="container">
+            <button class="openbtn mt-3" onclick="openNav()">&#9776; Menu</button>
+            <div class="card">
+              <div class="card-header">
+                <h1 class="display-4 fw-bold text-center">Postagens</h1>
+              </div>
+              <div class="card-body">
+                  <form action="/admin/postagem" name="publicacao" method="post">
+                    <div class="form-floating">
+                        <input type="text" placeholder=" " class="form-control" name="titulo" required>
+                        <label>Título da Postagem</label>
+                    </div>
+                    <br>
+                    <div class=" g-2 row">
+                        <div class="col-md">
+                            <div class="form-floating">
+                                <input type="date" name="dataInicio" class="form-control">
+                                <label>Data Início</label>
+                            </div>
+                        </div>
+                        <div class="col-md">
+                            <div class="form-floating">
+                                <input type="date" name="dataFim" class="form-control">
+                                <label>Data Fim</label>
+                            </div>
+                        </div>
+                    </div> 
+                    <br>
+                    <textarea name="corpoPostagem" id="postagem" cols="30" rows="10" class="form-control"></textarea>
+                    <div class="d-grid gap-2 col-6 mx-auto mt-2 botaoCadastro">
+                        <button class="btn btn-success" onclick="return validaPublicacao()">Postar</button>
+                    </div>
+                  </form>
+              </div>
+            </div>
+          </div>
+        </div>
+</body>
+<%- include('../../../partials/Administrador/footer.ejs') %>
+<script src="/js/postagem.js"></script>
+<script src="/js/tinymce/tinymce.min.js"></script>
+<script>
+    tinymce.init({
+        selector: '#postagem',
+        language: 'pt_BR',
+        plugins: ['autolink fullpage fullscreen hr image table preview']
+    });
+</script>

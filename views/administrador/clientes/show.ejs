@@ -1,0 +1,248 @@
+<%- include('../../../partials/Administrador/head.ejs') %> 
+<link rel="stylesheet" type="text/css" href="/css/admin.css">
+<%- include('../../../partials/Administrador/head2.ejs') %> 
+<body>
+    <%- include('../../../partials/Administrador/nav.ejs') %>
+    <div id="container">
+        <div class="container">
+            <button class="openbtn mt-3" onclick="openNav()">&#9776; Menu</button>
+            <div class="card-header">
+                <h1 class="display-4 fw-bold text-center">Clientes Cadastrados</h1>
+                <hr>
+            </div>
+            <div class="card-body">
+                <% if(Object.values(clientes).length === 0){ %>
+                    <div class="alert alert-secondary alert-dismissible fade show text-center" role="alert">
+                      <h6 class="display-6">Não Existem Clientes Cadastrados!</h6>
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                <% }else{ %>
+                    <div class="d-grid gap-2">
+                        <button type="button" class="btn btn-primary btn-lg position-relative">
+                            Total de Clientes Cadastrados
+                            <br>
+                            <i class="bi bi-person-plus" style="font-size: 5rem;"></i>
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            Total: <%=registros%>
+                            <span class="visually-hidden">unread messages</span>
+                            </span>
+                        </button>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Dados Cliente</th>
+                                <th>Administrador</th>
+                                <th>Status</th>
+                                <th>Ação</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% clientes.forEach(cliente => { %>
+                                <tr>
+                                    <th>
+                                        <%=cliente.nome%> 
+                                    </th>
+                                    <th>
+                                        <a href="#" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#modalInformacoes<%=cliente.id%>">
+                                            Informações
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-workspace" viewBox="0 0 16 16">
+                                            <path d="M4 16s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H4Zm4-5.95a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"/>
+                                            <path d="M2 1a2 2 0 0 0-2 2v9.5A1.5 1.5 0 0 0 1.5 14h.653a5.373 5.373 0 0 1 1.066-2H1V3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v9h-2.219c.554.654.89 1.373 1.066 2h.653a1.5 1.5 0 0 0 1.5-1.5V3a2 2 0 0 0-2-2H2Z"/>
+                                            </svg>
+                                        </a>
+                                    </th>
+                                    <th>
+                                        <form action="/admin/edit/response" method="post">
+                                            <input type="hidden" value="<%=cliente.id%>" name="idCliente" required>
+                                            <select name="responsavel" class="form-select">
+                                                <% administradores.forEach(administrador => { %>
+                                                    <% if(administrador.id == cliente.administradoreId){ %>
+                                                        <option value="<%=administrador.id%>" selected><%=administrador.nome%></option>
+                                                    <% }else{ %>
+                                                        <option value="<%=administrador.id%>"><%=administrador.nome%></option>
+                                                    <% } %> 
+                                                <% }); %> 
+                                            </select>
+                                    </th>
+                                    <th>
+                                        <button class="btn btn-success" onclick="alteraAdmin()">Salvar</button>
+                                        </form>
+                                    </th>
+                                    <th>
+                                        <form action="/admin/delete/cliente" method="post" onsubmit="confirmDeleteCliente(event)">
+                                            <button class="btn btn-danger" name="idCliente" value="<%=cliente.id%>">Excluir</button>
+                                        </form>
+                                    </th>
+                                </tr>
+
+                                <!-- Modal Exibe Informações do Cliente-->
+                                <div class="modal fade" id="modalInformacoes<%=cliente.id%>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                        <h5 class="modal-title display-6" id="exampleModalLabel">Informações do Cliente <i class="bi bi-person text-primary"></i></h5>
+                                        
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <form action="/admin/user/edit" method="post" id="editaDadosCliente">
+                                                        <div class="row g-2">
+                                                            <div class="col-md">
+                                                                <label>Nome Completo</label>
+                                                                <div class="form-floating">
+                                                                    <input type="text" class="form-control" name="nome" value="<%=cliente.nome%>" disabled>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md">
+                                                                <label>Email</label>
+                                                                <div class="form-floating">
+                                                                    <input type="email" class="form-control" name="email" value="<%=cliente.email%>" disabled>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <br>
+                                                        <div class="row g-2">
+                                                            <div class="col-md">
+                                                                <label>CPF</label>
+                                                                <div class="form-floating">
+                                                                    <input type="text" class="form-control" name="cpf" id="cpf" value="<%=cliente.cpf%>" disabled>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md">
+                                                                <label>CEP</label>
+                                                                <div class="form-floating">
+                                                                    <input type="text" class="form-control" name="cep" id="cep" size="10" maxlength="9" onblur="pesquisacep(this.value);" value="<%=cliente.cep%>" disabled>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <br>
+                                                        <div class="row g-2">
+                                                            <div class="col-md">
+                                                                <label>Rua</label>
+                                                                <div class="form-floating">
+                                                                    <input name="rua" type="text" id="rua" size="60" class="form-control" value="<%=cliente.rua%>" disabled>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md">
+                                                                <label>Bairro</label>
+                                                                <div class="form-floating">
+                                                                    <input name="bairro" type="text" id="bairro" size="40" class="form-control" value="<%=cliente.bairro%>" disabled>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <br>
+                                                        <div class="row g-2">
+                                                            <div class="col-md">
+                                                                <label>Cidade</label>
+                                                                <div class="form-floating">
+                                                                    <input name="cidade" type="text" id="cidade" size="40" class="form-control" value="<%=cliente.cidade%>" disabled>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md">
+                                                                <label>Estado</label>
+                                                                <div class="form-floating">
+                                                                    <input name="uf" type="text" id="uf" size="2" class="form-control" value="<%=cliente.estado%>" disabled>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <br>
+                                                        <div class="row g-2">
+                                                            <div class="col-md">
+                                                                <label>Data de Nascimento</label>
+                                                                <div class="form-floating">
+                                                                    <input type="date" class="form-control" name="dataNascimento" value="<%=cliente.data_nascimento%>" disabled>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md">
+                                                                <label>Selecione uma categoria de acordo com o seu grupo</label>
+                                                                <div class="form-floating">
+                                                                    <select class="form-select" id="floatingSelect" aria-label="Floating label select example" name="categoriaCliente" disabled>
+                                                                        <option value="0">Selecione uma categoria</option>
+                                                                        <%categorias.forEach(categoria => { %>
+                                                                            <% if(categoria.id == cliente.clienteCategoriumId){ %>
+                                                                                <option value="<%=categoria.id%>" selected><%=categoria.nome%></option>
+                                                                            <% } %> 
+                                                                        <%})%> 
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <br>
+                                                        <div class="row g-3">
+                                                            <div class="col-md">
+                                                                <label>Número de Identidade</label>
+                                                                <div class="form-floating">
+                                                                    <input type="text" class="form-control" name="numeroIdentidade" value="<%=cliente.numero_identidade%>" id="numeroRg" disabled>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md">
+                                                                <label>Orgão Expeditor</label>
+                                                                <div class="form-floating">
+                                                                    <input type="text" class="form-control" name="orgaoExpeditor" value="<%=cliente.orgao_expeditor_identidade%>" disabled>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md">
+                                                                <label>Estado da Identidade</label>
+                                                                <div class="form-floating">
+                                                                    <div class="form-floating">
+                                                                        <input type="text" class="form-control" name="telefone" id="telefone" value="<%=cliente.estado_identidade%>" disabled>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <br>
+                                                        <div class="row g-2">
+                                                            <div class="col-md">
+                                                                <label>Telefone</label>
+                                                                <div class="form-floating">
+                                                                    <input type="text" class="form-control" name="telefone" id="telefone" value="<%=cliente.telefone%>" disabled>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md">
+                                                                <label>Celular</label>
+                                                                <div class="form-floating">
+                                                                    <input type="text" class="form-control" name="celular" id="celular" value="<%=cliente.celular%>"  disabled>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <br>
+                                                        <div class="row g-2">
+                                                            <div class="col-md">
+                                                                <label>Alterar Senha Para Cliente</label>
+                                                                <div class="form-floating">
+                                                                    <input type="password" class="form-control" name="senhaCliente" value="<%=cliente.senha%>">
+                                                                    <p class="text-danger"><%=senhaError%></p> 
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <br>
+                                                        <br>
+                                                        <input type="hidden" name="idCliente" value="<%=cliente.id%>">
+                                                        <div class="d-grid col-6 gap-2 mx-auto botaoAtualizar">
+                                                            <button class="btn btn-warning" onclick="verificaEdicaoSenha()">Atualizar</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                            <% }); %> 
+                        </tbody>
+                    </table>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</body>
+<%- include('../../../partials/Administrador/footer.ejs') %>
+<script src="/js/editAdmin.js"></script>

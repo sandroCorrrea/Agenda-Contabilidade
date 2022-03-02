@@ -1,0 +1,50 @@
+<%- include('../../../partials/Administrador/head.ejs') %> 
+<link rel="stylesheet" type="text/css" href="/css/categoria.css">
+<%- include('../../../partials/Administrador/head2.ejs') %> 
+<body>
+    <%- include('../../../partials/Administrador/nav.ejs') %>
+    <div id="container">
+        <div class="container">
+            <button class="openbtn mt-3" onclick="openNav()">&#9776; Menu</button>
+            <div class="card">
+                <div class="card-header">
+                    <h1 class="display-4 fw-bold text-center">Categorias Cadastradas</h1>
+                    <hr>
+                    <a class="btn btn-primary btnCategorias" href="/admin/categoria">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-bag-plus" viewBox="0 0 16 16">
+                          <path fill-rule="evenodd" d="M8 7.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0v-1.5H6a.5.5 0 0 1 0-1h1.5V8a.5.5 0 0 1 .5-.5z"></path>
+                          <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z"></path>
+                      </svg>
+                      Cadastrar Nova Categoria
+                    </a>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-6">
+                          <div class="card">
+                            <div class="card-body">
+                              <h5 class="card-title display-6">Listar Todas Categorias de Serviço</h5>
+                              <a href="#" class="btn btn-primary" onclick="requisicaoCategorias('/admin/categoriasServico')">Listar</a>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div class="card">
+                            <div class="card-body">
+                              <h5 class="card-title display-6">Listar Todas Categorias de Cliente</h5>
+                              <a href="#" class="btn btn-primary" onclick="requisicaoCategorias('/admin/categoriasUsuario')">Listar</a>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                    <div id="custom-cards">
+                        <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5" id="todasCategorias">
+                        </div>
+                    </div>                    
+                </div>
+            </div>        
+        </div>
+    </div>
+</body>
+<%- include('../../../partials/Administrador/footer.ejs') %>
+<script type="text/javascript" src="/js/todasCategorias.js"></script>

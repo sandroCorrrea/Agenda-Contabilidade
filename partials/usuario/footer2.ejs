@@ -1,0 +1,115 @@
+<hr>
+<footer class="mt-auto">
+    <div class="row">
+      <div class="col-2">
+        <h5>Informações</h5>
+        <ul class="nav flex-column">
+          <li class="nav-item mb-2"><a href="/" class="nav-link p-0 text-muted">Página Inicial</a></li>
+          <li class="nav-item mb-2"><a href="/ajuda" class="nav-link p-0 text-muted">Suporte</a></li>
+          <li class="nav-item mb-2"><a href="/servicos" class="nav-link p-0 text-muted">Serviços</a></li>
+        </ul>
+      </div>
+
+      <div class="col-2">
+        <h5></h5>
+        <ul class="nav flex-column">
+          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted"></a></li>
+          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted"></a></li>
+          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted"></a></li>
+          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted"></a></li>
+          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted"></a></li>
+        </ul>
+      </div>
+
+      <div class="col-2">
+        <h5>Contato</h5>
+        <ul class="nav flex-column">
+          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted" data-bs-toggle="modal" data-bs-target="#exampleModalTel">Telefone</a></li>
+          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted" data-bs-toggle="modal" data-bs-target="#exampleModalEmail">Email</a></li>
+          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted" data-bs-toggle="modal" data-bs-target="#exampleModalHorario">Horário</a></li>
+          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted"></a></li>
+          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted"></a></li>
+        </ul>
+      </div>
+
+      <div class="col-4 offset-1">
+        <form method="post" action="/email/servicos" onsubmit="confirmacaoEnvioDeEmail()">
+          <h5>Receber Informações Dos Serviços</h5>
+          <p>Informe o seu Email para receber notificações de novos serviços disponíveis.</p>
+          <div class="d-flex w-100 gap-2">
+            <input id="newsletter1" type="email" class="form-control" placeholder="Email" name="emailDestinatario" required>
+            <button class="btn btn-primary">Enviar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-between">
+      <p>&copy; 2021 AGENDA CONTABILIDADE, Inc.Todos os Direitos Reservados.</p>
+      <ul class="list-unstyled d-flex">
+        <li class="ms-3"><a class="link-dark" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#twitter"/></svg></a></li>
+        <li class="ms-3"><a class="link-dark" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#instagram"/></svg></a></li>
+        <li class="ms-3"><a class="link-dark" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#facebook"/></svg></a></li>
+      </ul>
+    </div>
+</footer>
+<!-- MODAL EMAIL -->
+<div class="modal fade" id="exampleModalEmail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title display-5" id="exampleModalLabel">Email <i class="bi bi-envelope"></i></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <h6>Email Para Contato: <b style="color: #0d6efd;">agendacontabilidadectga@gmail.com</b></h6>
+        <br>
+        <h6>Email Para Contato: <b style="color: #0d6efd;">contabilidadeagenda@gmail.com</b></h6>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</i></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL TELEFONE -->
+<div class="modal fade" id="exampleModalTel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title display-5" id="exampleModalLabel">Telefone <i class="bi bi-telephone"></i></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <h6>Telefone Para Contato: <b style="color: #0d6efd;">(33)3321-4763</b></h6>
+        <br>
+        <h6>Telefone Para Contato: <b style="color: #0d6efd;">(33)3321-4344</b></h6>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</i></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL HORÁRIO -->
+<div class="modal fade" id="exampleModalHorario" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title display-5" id="exampleModalLabel">Horário <i class="bi bi-clock-history"></i></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <h4><b>07:00     -     11:00</b></h4>
+        <h4><b>13:00     -     17:30</b></h4>
+        <hr>
+        <h4>De: <b>Segunda-Feira á Sexta-Feira</b></h4>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</i></button>
+      </div>
+    </div>
+  </div>
+</div>

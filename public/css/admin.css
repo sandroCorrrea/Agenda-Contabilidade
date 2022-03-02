@@ -1,0 +1,21 @@
+#imagemAdm{
+    width: 320px;
+    height: 320px;
+}
+.card, .card-header, .card-body{
+    background: none;
+    border: none;
+}
+.btnCategorias{
+    float: right;
+}
+.textAdmin{
+    text-align: left;
+}
+.imgClienteAdmin{
+    width: 30%;
+    height: 30%;
+}
+.botaoAtualizar{
+    width: 20%;
+}

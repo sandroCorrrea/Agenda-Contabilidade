@@ -1,0 +1,15 @@
+.card{
+    margin-top: 20vh;
+    background: none;
+    border: none;
+}
+.card-header{
+    background: none;
+    border: none;
+}
+.card-body{
+    background: none;
+}
+.buttonEdit{
+    width: 20%;
+}

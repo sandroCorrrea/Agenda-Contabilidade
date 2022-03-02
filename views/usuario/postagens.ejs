@@ -1,0 +1,87 @@
+<%- include('../../partials/usuario/head') %>
+    <title>Agenda Contabilidade</title>
+    <link rel="stylesheet" type="text/css" href="/css/postagensUser.css">
+<%- include('../../partials/usuario/head2') %> 
+<body>
+  <%- include('../../partials/usuario/nav') %> 
+  <div class="container"> 
+      <div class="card">
+        <div class="card-header">
+            <h6 class="display-4 text-center fw-bold">Veja Aqui Nossas Postagens!</h6>
+        </div>
+        <div class="card-body mt-5">
+            <% if(Object.values(postagens).length===0){ %>
+                <div class="alert alert-secondary alert-dismissible fade show text-center" role="alert">
+                    <h6 class="display-6">Não temos nenhuma Postagem feita!</h6>
+                    <a href="#">
+                        <i class="bi bi-emoji-frown" style="font-size: 4rem; color: black;"></i>
+                    </a>
+                    <p>
+                        <a href="/">Clique aqui para voltar ao menu principal!</a> 
+                    </p>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            <% }else{ %>
+                <% postagens.forEach(post => { %>
+                    <% var fim    = agenda.RetornaDataParaComparacao(post.dataFim)   %>
+                    <% var inicio = agenda.RetornaDataParaComparacao(post.dataInicio)%>
+                    
+                    <% if(dataDeHoje.getTime() >= inicio.getTime()  && dataDeHoje.getTime()  <= fim.getTime()){ %>
+                      <% if(agenda.VerificaNumeroImparPar(post.id) == "par"){ %>
+                        <div class="row featurette mt-5 postagens">
+                          <div class="col-md-7">
+                            <h2 class="featurette-heading"><span class="text-muted"><%=post.titulo%> </span></h2>
+                            <p class="lead">Publicado em <%=agenda.TrataData(post.createdAt)%> ás <%=agenda.TrataHora(post.createdAt)%></p>
+                            <p><%-post.corpoPostagem%></p>
+                          </div>
+                          <div class="col-md-5">
+                            <img src="/img/escritorio.jpg" alt="Imagem Postagem" width="430" height="430">
+                          </div>
+                        </div>
+                      <%}else{ %>
+                        <div class="row featurette mt-5 postagens">
+                          <div class="col-md-7 order-md-2">
+                            <h2 class="featurette-heading"><span class="text-muted"><%=post.titulo%> </span></h2>
+                            <p class="lead">Publicado em <%=agenda.TrataData(post.createdAt)%> ás <%=agenda.TrataHora(post.createdAt)%></p>
+                            <p><%-post.corpoPostagem%></p>
+                          </div>
+                          <div class="col-md-5">
+                            <img src="/img/escritorio.jpg" alt="Imagem Postagem" width="430" height="430">
+                          </div>
+                        </div>
+                      <% } %> 
+                    <% } %> 
+                    <% if(isNaN(inicio.getTime()) && isNaN(fim.getTime())){ %>
+                      <% if(agenda.VerificaNumeroImparPar(post.id) == "par"){ %>
+                        <div class="row featurette mt-5 postagens">
+                          <div class="col-md-7">
+                            <h2 class="featurette-heading"><span class="text-muted"><%=post.titulo%> </span></h2>
+                            <p class="lead">Publicado em <%=agenda.TrataData(post.createdAt)%> ás <%=agenda.TrataHora(post.createdAt)%></p>
+                            <p><%-post.corpoPostagem%></p>
+                          </div>
+                          <div class="col-md-5">
+                            <img src="/img/escritorio.jpg" alt="Imagem Postagem" width="430" height="430">
+                          </div>
+                        </div>
+                      <% }else{ %>
+                        <div class="row featurette mt-5 postagens">
+                          <div class="col-md-7 order-md-2">
+                            <h2 class="featurette-heading"><span class="text-muted"><%=post.titulo%> </span></h2>
+                            <p class="lead">Publicado em <%=agenda.TrataData(post.createdAt)%> ás <%=agenda.TrataHora(post.createdAt)%></p>
+                            <p><%-post.corpoPostagem%></p>
+                          </div>
+                          <div class="col-md-5">
+                            <img src="/img/escritorio.jpg" alt="Imagem Postagem" width="430" height="430">
+                          </div>
+                        </div>
+                      <% } %> 
+                    <% } %> 
+                <% }); %> 
+            <% } %> 
+        </div>
+      </div>
+    </div>
+    <%- include('../../partials/usuario/footer2') %> 
+</body>
+<%- include('../../partials/usuario/footer1') %> 
+

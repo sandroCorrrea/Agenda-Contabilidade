@@ -1,0 +1,77 @@
+.card, .card-header, .card-body{
+    background: none;
+    border: none;
+}
+.mx-auto{
+    width: 20%;
+}
+.card-cover{
+    background-color: #0d6efd;
+}
+.linkModal{
+    text-decoration: none;
+}
+.card-img-top{
+    height: 30%;
+}
+.modalInformacoes{
+    text-decoration: none;
+}
+
+.itens-sidebar{
+    margin-left: 1vh;
+    display: inline;
+}
+.linkVoltar{
+    border-radius: 2vh;
+}
+.alert{
+    width: 100%;
+}
+.cardsCategorias{
+    width: 40%;
+}
+.btnCategorias{
+    float: right;
+}
+
+/* ----------------------------------------------   IMAGENS */
+/* EXIBIÇÃO DE IMAGEM */
+
+input[type='file'] {
+    display: none;
+}
+
+.max-width {
+    max-width: 500px;
+    width: 100%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#imgPhoto {
+    margin-top: 10%;
+    height: 200px;
+    width: 200px;
+    padding:20px;
+    background-color: #eee;
+    border: 5px solid #ccc;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background .3s;
+}
+
+#imgPhoto:hover{
+    background-color: rgb(180, 180, 180);
+    border: 5px solid #111;
+}
+.containerImg img{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+/* VALIDAÇÃO DO FORMULÁRIO  */
+.error{
+    color: #dc3545;
+}

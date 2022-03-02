@@ -1,0 +1,21 @@
+.card-login{
+    margin-top: 10vh;
+    margin-bottom: 20vh;
+}
+.cabecalhoLogin{
+    margin-bottom: 3vh;
+}
+.card{
+    background: none;
+    border: none;
+}
+.card-body{
+    background: none;
+    border: none;
+}
+.btnCadastro{
+    width: 20%;
+}
+.error{
+    color: red;
+}

@@ -1,0 +1,86 @@
+<%- include('../../partials/usuario/head') %> 
+  <title>Agenda Contabilidade</title>
+  <link rel="stylesheet" type="text/css" href="/css/ajuda.css">
+<%- include('../../partials/usuario/head2') %> 
+<body>
+  <%- include('../../partials/usuario/nav') %> 
+  <main class="ajuda">
+    <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
+      <div class="col-md-5 p-lg-5 mx-auto my-5">
+        <h1 class="display-4 fw-normal">Suporte Cliente</h1>
+        <p class="lead fw-normal">Tem alguma <b>dúvida</b> sobre nossos <b>serviços</b> ? Abaixo temos meio de <b>contatos</b> e <b>suporte</b> ao cliente. Veja as opções !</p>
+      </div>
+      <div class="product-device shadow-sm d-none d-md-block"></div>
+      <div class="product-device product-device-2 shadow-sm d-none d-md-block"></div>
+    </div>
+  
+    <div class="d-md-flex flex-md-equal w-100 my-md-3 ps-md-3">
+      <div class="bg-light me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
+        <div class="my-3 p-3">
+          <h2 class="display-5">Preencha com atenção os campos!</h2>
+          <p class="lead">Entraremos em contato por <b>Email</b> ou <b>telefone</b>, fique atento !</p>
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <div class="bg-dark shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
+      </div>
+      <div class="bg-primary me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
+        <div class="my-3 py-3">
+          <h2 class="display-5">Suporte</h2>
+          <form action="/suporte/dados" onsubmit="confirmaSolicitacao()" method="post">
+            <div class="g-2 row">
+              <div class="col-md">
+                <div class="form-floating">
+                  <input type="text" class="form-control" name="primeiroNome" placeholder=" " required>
+                  <label>Primeiro Nome:</label>
+                </div>
+              </div>
+              <div class="col-md">
+                <div class="form-floating">
+                  <input type="email" class="form-control" name="email" placeholder=" " required>
+                  <label>Email:</label>
+                </div>
+              </div>
+            </div>
+            <br>
+            <div class="g-2 row">
+              <div class="col-md">
+                <div class="form-floating">
+                  <input type="text" class="form-control" name="celular" id="celular" placeholder=" ">
+                  <label>Celular:</label>
+                </div>
+              </div>
+              <div class="col-md">
+                <div class="form-floating">
+                  <input type="text" class="form-control" name="telefone" id="telefone" placeholder=" ">
+                  <label>Telefone:</label>
+                </div>
+              </div>
+            </div>
+            <br>
+            <div class="form-floating">
+              <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px" name="assunto" required></textarea>
+              <label for="floatingTextarea2">Assunto:</label>
+            </div>
+            <br>
+            <div class="d-grid gap-2 col-6 mx-auto">
+              <button class="btn btn-secondary" type="submit">Enviar</button>
+            </div>
+          </form>
+        </div>
+        <div class="bg-light shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
+      </div>
+    </div>
+  </main>
+    <%- include('../../partials/usuario/footer2') %> 
+</body>
+<%- include('../../partials/usuario/footer1') %> 
+<script src="/js/suporte.js"></script>
+

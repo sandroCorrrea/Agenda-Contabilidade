@@ -1,0 +1,20 @@
+body{
+  overflow-x: hidden;
+}
+.nav-item{
+  margin-left: 30px;
+  font-size: 1.10em;
+}
+.nav-item:hover{
+  background-color: #ffffff26;
+}
+.linkEntrar{
+  margin-right: 20vh;
+}
+.sectionLogo{
+  margin-top: 10vh;
+}
+footer{
+  margin-top: 10vh;
+  margin: 0;
+}

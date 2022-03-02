@@ -1,0 +1,38 @@
+<%- include('../../../partials/Administrador/head.ejs') %> 
+<link rel="stylesheet" type="text/css" href="/css/categoria.css">
+<%- include('../../../partials/Administrador/head2.ejs') %> 
+<body>
+    <%- include('../../../partials/Administrador/nav.ejs') %>
+    <div id="container">
+        <div class="container">
+            <button class="openbtn mt-3" onclick="openNav()">&#9776; Menu</button>
+            <div class="card">
+                <div class="card-header">
+                    <h1 class="display-4 fw-bold text-center">Atualizar Categoria</h1>
+                    <a href="/admin/categorias" class="btn btn-primary linkVoltar"><i class="bi bi-arrow-left"></i>
+                        <div class="itens-sidebar">
+                            Voltar
+                        </div>
+                    </a>
+                </div>
+                <div class="card-body">
+                    <form action="/admin/categoria/edit" method="post">
+                        <div class="row g-1">
+                            <div class="col-md">
+                                <div class="form-floating">
+                                    <input type="text" name="nome" value="<%=categorias.nome%>" placeholder=" " class="form-control" required>
+                                    <label>Nome</label>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="d-grid col-6 gap-2 mx-auto">
+                            <button class="btn btn-warning" name="id" value="<%=categorias.id%>">Atualizar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>        
+        </div>
+    </div>
+</body>
+<%- include('../../../partials/Administrador/footer.ejs') %>

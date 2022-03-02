@@ -1,0 +1,14 @@
+.card, .card-header, .card-body{
+    background: none;
+    border: none;
+}
+.botaoCadastro{
+    width: 20%;
+}
+.btnCategorias{
+    float: right;
+}
+.cardPost{ 
+    background-image: url('/img/postagens.jpg');
+    background-position: right 35% bottom 80%;
+}

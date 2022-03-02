@@ -1,0 +1,61 @@
+<% if(Object.values(categorias).length === 0){ %>
+  <div class="alert alert-secondary alert-dismissible fade show text-center" role="alert">
+    <h6 class="display-6">Não temos nenhuma categoria cadastrada!</h6>
+    <p>
+        <a href="/admin/categoria">Clique aqui para realizar o cadastro de uma categoria!</a> 
+    </p>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+<% }else{ %>
+  <% categorias.forEach(categoria => { %>
+    <div class="col cardsCategorias">
+        <div class="card card-cover h-100 overflow-hidden text-white bg-primary rounded-5 shadow-lg">
+          <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
+            <a href="" data-bs-toggle="modal" data-bs-target="#exampleModal<%=categoria.id%>" class="modalInformacoes">
+              <h6 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold text-white"><%=categoria.nome%> </h6>
+            </a>
+            <ul class="d-flex list-unstyled mt-auto">
+              <li class="me-auto">
+                <img src="/img/logo.png" alt="Agenda" width="32" height="32" class="rounded-circle border border-white">
+              </li>
+              <li class="me-auto">
+                <hr>
+                <form method="post" action="/admin/categoria/excluir" style="display: inline;" onsubmit="confirmaExclusao(event)">
+                    <button class="btn btn-danger" value="<%=categoria.id%>" name="id">
+                        <i class="bi bi-trash"></i>               Excluir
+                    </button>
+                </form>
+                <a class="btn btn-warning" href="/admin/categoria/<%=categoria.id%> ">
+                    <i class="bi bi-pencil-square"></i>       Editar
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal<%=categoria.id%>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Informações da Categoria</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="list-group">
+              <pre>Nome:                         <%=categoria.nome.toUpperCase()%></pre>
+              <pre>Data de Criação:              <%=agenda.TrataData(categoria.createdAt)%></pre>
+              <pre>Hora da Criação:              <%=agenda.TrataHora(categoria.createdAt)%></pre>
+              <hr>
+              <pre>Data da Última Alteração:     <%=agenda.TrataData(categoria.updatedAt)%></pre>
+              <pre>Hora da Última Alteração:     <%=agenda.TrataHora(categoria.updatedAt)%></pre>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% }); %> 
+<% } %>
