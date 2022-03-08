@@ -1,8 +1,9 @@
 const express = require('express');
-const router  = express.Router();
+const router = express.Router();
+const authAdmin = require('../middlewares/adminAuth');
 
 //------------------------- TEMPLATE QUE RENDERIZA A PÁGINA PRINCIPAL DO ADMISTRADOR
-router.get('/admin', (req, res) => {
+router.get('/admin', authAdmin, (req, res) => {
     res.render('administrador/index/index');
 });
 //----------------------------------------------------------------------------------

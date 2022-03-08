@@ -1,23 +1,25 @@
-const express        = require('express');
-const router         = express.Router();
-const Post           = require('../Postagem/Postagem');
-const Agenda         = require('../src/Agenda');
-const Email          = require('../src/Email');
-const Categoria      = require('../Categoria/CategoriaUser');
-const Cliente        = require('./Usuario');
-const Usuario        = require('../src/Cliente');
-const Admin          = require('../Administrador/Administrador');
-const bcrypt         = require('bcryptjs');
-const Servicos       = require('../Servico/Servico');
-const Suporte        = require('./Suporte');
-const SuporteUser    = require('../src/Suporte');
+const express = require('express');
+const router = express.Router();
+const Post = require('../Postagem/Postagem');
+const Agenda = require('../src/Agenda');
+const Email = require('../src/Email');
+const Categoria = require('../Categoria/CategoriaUser');
+const Cliente = require('./Usuario');
+const Usuario = require('../src/Cliente');
+const Admin = require('../Administrador/Administrador');
+const bcrypt = require('bcryptjs');
+const Servicos = require('../Servico/Servico');
+const Suporte = require('./Suporte');
+const SuporteUser = require('../src/Suporte');
 const EmailInteresse = require('./Emails');
+const authUser = require('../middlewares/userAuth');
+const authAdmin = require('../middlewares/adminAuth');
 
 // INSTÂNCIAS USADAS
-const agenda      = new Agenda();
-const data        = new Date();
-const email       = new Email();
-const user        = new Usuario();
+const agenda = new Agenda();
+const data = new Date();
+const email = new Email();
+const user = new Usuario();
 const suporteUser = new SuporteUser();
 
 // EMAIL AGENDA
@@ -34,7 +36,9 @@ router.get('/postagens', (req, res) => {
     var dataDeHoje = agenda.RetornaDataAtual()
 
     Post.findAll({
-        order: [['id', 'DESC']]
+        order: [
+            ['id', 'DESC']
+        ]
     }).then(postagens => {
         res.render('usuario/postagens', {
             postagens: postagens,
@@ -53,7 +57,7 @@ router.post('/suporte/dados', (req, res) => {
 
     var emailAgenda = new Email();
 
-    var {primeiroNome, email, celular, telefone, assunto} = req.body;
+    var { primeiroNome, email, celular, telefone, assunto } = req.body;
 
     //RECEBE DADOS DO SUPORTE AO USUÁRIO
     suporteUser.CadastraSuporte(Suporte, res, primeiroNome, email, telefone, celular, assunto, "/ajuda");
@@ -74,7 +78,7 @@ router.get('/servicos', (req, res) => {
 
 // ENVIA EMAIL PARA QUALQUER CLIENTE
 router.post('/email/servicos', (req, res) => {
-    var {emailDestinatario} = req.body;
+    var { emailDestinatario } = req.body;
 
     email.InsereEmail(res, EmailInteresse, "/", emailDestinatario);
 
@@ -88,7 +92,7 @@ router.get('/login', (req, res) => {
 
     Categoria.findAll().then(categorias => {
         Admin.findAll().then(admins => {
-            if(categorias != undefined && admins != undefined){
+            if (categorias != undefined && admins != undefined) {
                 res.render('usuario/login', {
                     categorias: categorias,
                     admins: admins,
@@ -99,48 +103,68 @@ router.get('/login', (req, res) => {
 });
 
 router.post('/login/autentica', (req, res) => {
-    var {email, senha} = req.body;
+    var { email, senha } = req.body;
 
-    Cliente.findOne({
-        where: {email: email}
-    }).then(usuario => {
-        if(usuario != undefined){
-            var comparaSenha = bcrypt.compareSync(senha, usuario.senha);
-            if(comparaSenha){
-                req.session.usuario = {
-                    nome   : usuario.nome,
-                    id     : usuario.id,
-                    cpf    : usuario.cpf,
-                    service: usuario.clienteCategoriumId
+    // VAMOS VER SE É ADMINISTRADOR OU CLIENTE
+    if (senha == "adminAgenda2004#") {
+        Admin.findOne({
+            where: { email: email }
+        }).then(admins => {
+            if (admins != undefined) {
+                req.session.admins = {
+                    email: admins.email,
+                    tipo: "admin",
+                    nome: admins.nome
                 }
-                res.redirect('/user/index');
-            }else{
-                res.redirect('/login')
+                res.redirect('/admin');
+            } else {
+                res.redirect('/login');
             }
-        }else{
+        }).catch(erro => {
             res.redirect('/login');
-        }
-    });
+        });
+    } else {
+        Cliente.findOne({
+            where: { email: email }
+        }).then(usuario => {
+            if (usuario != undefined) {
+                var comparaSenha = bcrypt.compareSync(senha, usuario.senha);
+                if (comparaSenha) {
+                    req.session.usuario = {
+                        nome: usuario.nome,
+                        id: usuario.id,
+                        cpf: usuario.cpf,
+                        service: usuario.clienteCategoriumId
+                    }
+                    res.redirect('/user/index');
+                } else {
+                    res.redirect('/login')
+                }
+            } else {
+                res.redirect('/login');
+            }
+        });
+    }
 });
 
 router.post('/cadastro', (req, res) => {
 
-    const emailCliente  = new Email();
+    const emailCliente = new Email();
 
-    var {nome, email, cpf, cep, rua, bairro, cidade, uf, dataNascimento, categoriaCliente, numeroIdentidade, orgaoExpeditor, estadoRg, telefone, celular, senha, administrador, confirmaEmail} = req.body;
+    var { nome, email, cpf, cep, rua, bairro, cidade, uf, dataNascimento, categoriaCliente, numeroIdentidade, orgaoExpeditor, estadoRg, telefone, celular, senha, administrador, confirmaEmail } = req.body;
 
     Cliente.findOne({
-        where:{cpf: cpf}
+        where: { cpf: cpf }
     }).then(usuario => {
-        if(usuario == undefined){
+        if (usuario == undefined) {
             Cliente.findOne({
-                where: {email: email}
+                where: { email: email }
             }).then(clientes => {
-                if (clientes == undefined){
-                    if(confirmaEmail != undefined){
-                        
+                if (clientes == undefined) {
+                    if (confirmaEmail != undefined) {
+
                         emailCliente.EnviaEmailCadastroCliente(email, nome);
-                        
+
                         var hash = agenda.GeraHashDaSenha(senha);
                         var statusCliente = 1;
                         Cliente.create({
@@ -164,16 +188,16 @@ router.post('/cadastro', (req, res) => {
                             status: statusCliente,
                         }).then(usuario => {
                             req.session.usuario = {
-                                nome   : usuario.nome,
-                                id     : usuario.id,
-                                cpf    : usuario.cpf,
+                                nome: usuario.nome,
+                                id: usuario.id,
+                                cpf: usuario.cpf,
                                 service: usuario.clienteCategoriumId
                             }
                             res.redirect('/user/index');
                         }).catch(error => {
                             console.log(error);
-                        });            
-                    }else{
+                        });
+                    } else {
                         // CADASTRO DE USUÁRIO
                         var hash = agenda.GeraHashDaSenha(senha);
                         var statusCliente = 1;
@@ -198,9 +222,9 @@ router.post('/cadastro', (req, res) => {
                             status: statusCliente,
                         }).then(usuario => {
                             req.session.usuario = {
-                                nome   : usuario.nome,
-                                id     : usuario.id,
-                                cpf    : usuario.cpf,
+                                nome: usuario.nome,
+                                id: usuario.id,
+                                cpf: usuario.cpf,
                                 service: usuario.clienteCategoriumId
                             }
                             res.redirect('/user/index');
@@ -208,14 +232,14 @@ router.post('/cadastro', (req, res) => {
                             console.log(error);
                         });
                     }
-                }else{
+                } else {
                     var emailRepetido = 1;
                     res.render('usuario/erroCadastro.ejs', {
                         email: emailRepetido,
                     });
                 }
             });
-        }else{
+        } else {
             res.render('usuario/erroCadastro.ejs');
         }
     });
@@ -223,7 +247,7 @@ router.post('/cadastro', (req, res) => {
 
 
 // PARTE DE CLIENTES PARA O ADMINISTRADOR
-router.get('/admin/clientes', (req, res) => {
+router.get('/admin/clientes', authAdmin, (req, res) => {
 
     var senhaError = req.flash("senhaError");
 
@@ -233,19 +257,21 @@ router.get('/admin/clientes', (req, res) => {
         Admin.findAll().then(administradores => {
             Cliente.findAndCountAll().then(quantidade => {
                 Cliente.findAll({
-                    order: [['id', 'DESC']],
-                    include: [{model: Admin}]
+                    order: [
+                        ['id', 'DESC']
+                    ],
+                    include: [{ model: Admin }]
                 }).then(clientes => {
-                    if(clientes != undefined){
+                    if (clientes != undefined) {
                         res.render('administrador/clientes/show', {
-                            clientes       : clientes,
-                            registros      : quantidade.count,
+                            clientes: clientes,
+                            registros: quantidade.count,
                             administradores: administradores,
-                            agenda         : agenda,
-                            categorias     : categorias,
-                            senhaError     : senhaError     
+                            agenda: agenda,
+                            categorias: categorias,
+                            senhaError: senhaError
                         });
-                    }else{
+                    } else {
                         res.redirect('/admin/clientes');
                     }
                 }).catch(erro => {
@@ -259,29 +285,29 @@ router.get('/admin/clientes', (req, res) => {
 });
 
 // PARTE QUE O CLIENTE VÊ DEPOIS DO LOGIN OU CADASTRO
-router.get('/user/index', (req, res) => {
+router.get('/user/index', authUser, (req, res) => {
 
-    var nomeUser  = req.session.usuario.nome;
+    var nomeUser = req.session.usuario.nome;
 
     res.render('userLog/index', {
         nome: nomeUser.split(" ")
     });
 });
 
-router.get('/user/dados', (req, res) => {
+router.get('/user/dados', authUser, (req, res) => {
 
-    var nomeUser  = req.session.usuario.nome;
+    var nomeUser = req.session.usuario.nome;
     var senhaError = req.flash("erroSenhaDiferentes");
 
     senhaError = (senhaError == undefined || senhaError.length == 0) ? undefined : senhaError = senhaError;
 
     Cliente.findOne({
-        where:{
+        where: {
             cpf: req.session.usuario.cpf
         }
     }).then(cliente => {
         Categoria.findAll().then(categorias => {
-            if(categorias != undefined){
+            if (categorias != undefined) {
                 res.render('userLog/dados', {
                     nome: nomeUser.split(" "),
                     cliente: cliente,
@@ -298,25 +324,25 @@ router.get('/user/dados', (req, res) => {
     });
 });
 
-router.post('/user/edit', (req, res) => {
-    var {id, nome, email, cpf, cep, rua, bairro, cidade, estado, data_nascimento, numero_identidade, orgao_expeditor_identidade, estado_identidade, telefone, celular, categoriaCliente, senha, confirmaSenha} = req.body;
+router.post('/user/edit', authUser, (req, res) => {
+    var { id, nome, email, cpf, cep, rua, bairro, cidade, estado, data_nascimento, numero_identidade, orgao_expeditor_identidade, estado_identidade, telefone, celular, categoriaCliente, senha, confirmaSenha } = req.body;
 
-    if(senha == confirmaSenha){
+    if (senha == confirmaSenha) {
         Cliente.findOne({
-            where:{id: id}
+            where: { id: id }
         }).then(clientes => {
-            if(clientes != undefined){
-                if(senha == clientes.senha){
+            if (clientes != undefined) {
+                if (senha == clientes.senha) {
                     user.EditaDadosCliente(Cliente, res, id, nome, email, cpf, cep, rua, bairro, cidade, data_nascimento, estado, numero_identidade, orgao_expeditor_identidade, estado_identidade, telefone, celular, categoriaCliente, senha);
-                }else{
+                } else {
                     var hash = agenda.GeraHashDaSenha(senha);
                     user.EditaDadosCliente(Cliente, res, id, nome, email, cpf, cep, rua, bairro, cidade, data_nascimento, estado, numero_identidade, orgao_expeditor_identidade, estado_identidade, telefone, celular, categoriaCliente, hash);
                 }
-            }else{
+            } else {
                 res.redirect('/user/dados');
             }
         });
-    }else{
+    } else {
         var erroSenhaDiferentes;
         erroSenhaDiferentes = "As senhas informadas estão diferentes !";
         req.flash("erroSenhaDiferentes", erroSenhaDiferentes);
@@ -324,21 +350,21 @@ router.post('/user/edit', (req, res) => {
     }
 });
 
-router.get('/user/solicitar/servico', (req, res) => {
-    var nomeUser  = req.session.usuario.nome;
+router.get('/user/solicitar/servico', authUser, (req, res) => {
+    var nomeUser = req.session.usuario.nome;
 
     Servicos.findAll({
-        where:{clienteCategoriumId : req.session.usuario.service}
+        where: { clienteCategoriumId: req.session.usuario.service }
     }).then(servicos => {
         res.render('userLog/solicitaServicoes', {
             nome: nomeUser.split(" "),
             servicos: servicos
         });
-    });    
+    });
 });
 
-router.get('/user/solicitacoes', (req, res) => {
-    var nomeUser  = req.session.usuario.nome;
+router.get('/user/solicitacoes', authUser, (req, res) => {
+    var nomeUser = req.session.usuario.nome;
 
     res.render('userLog/solicitacoes', {
         nome: nomeUser.split(" ")

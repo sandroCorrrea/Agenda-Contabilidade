@@ -1,28 +1,31 @@
-const express  = require('express');
-const router   = express.Router();
+const express = require('express');
+const router = express.Router();
 const Postagem = require('./Postagem');
-const Post     = require('../src/Postagem');
+const Post = require('../src/Postagem');
 const Agenda = require('../src/Agenda');
+const authAdmin = require('../middlewares/adminAuth');
 
 // INSTÂNCIAS USADAS
 const postagem = new Post();
-const agenda   = new Agenda();
+const agenda = new Agenda();
 
-router.get('/admin/postagem', (req, res) => {
+router.get('/admin/postagem', authAdmin, (req, res) => {
     res.render('administrador/postagens/new');
 });
 
-router.post('/admin/postagem', (req, res) => {
+router.post('/admin/postagem', authAdmin, (req, res) => {
 
-    var {titulo, dataInicio, dataFim, corpoPostagem} = req.body;
+    var { titulo, dataInicio, dataFim, corpoPostagem } = req.body;
 
     postagem.InserePostagem(res, dataInicio, dataFim, corpoPostagem, titulo, Postagem);
 });
 
-router.get('/admin/postagens', (req, res) => {
+router.get('/admin/postagens', authAdmin, (req, res) => {
 
     Postagem.findAll({
-        order: [['id', 'DESC']]
+        order: [
+            ['id', 'DESC']
+        ]
     }).then(postagens => {
         res.render('administrador/postagens/show', {
             postagens: postagens,
@@ -33,21 +36,21 @@ router.get('/admin/postagens', (req, res) => {
     });
 });
 
-router.post('/admin/post/excluir', (req, res) => {
-    var {id} = req.body;
+router.post('/admin/post/excluir', authAdmin, (req, res) => {
+    var { id } = req.body;
 
     postagem.ExcluirPostagem(id, Postagem, res);
 });
 
-router.get('/admin/postagem/:id', (req, res) => {
+router.get('/admin/postagem/:id', authAdmin, (req, res) => {
 
-    var {id} = req.params;
+    var { id } = req.params;
 
     postagem.CriaArquivoParaEdicao(id, res, Postagem);
 });
 
-router.post('/admin/postagem/edit', (req, res) => {
-    var {titulo, dataInicio, dataFim, corpoPostagem, id} = req.body;
+router.post('/admin/postagem/edit', authAdmin, (req, res) => {
+    var { titulo, dataInicio, dataFim, corpoPostagem, id } = req.body;
 
     postagem.EditaPostagem(Postagem, id, dataInicio, dataFim, titulo, corpoPostagem, res);
 });

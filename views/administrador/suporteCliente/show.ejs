@@ -37,26 +37,20 @@
                 <%}else{ %>
                     <table class="table">
                         <thead>
-                            <tr>
-                                <th></th>
-                                <th>Nº Protocolo</th>
-                                <th>Nome Cliente</th>
-                                <th>Assunto</th>
-                                <th>Email</th>
-                                <th>Celular</th>
-                                <th>Telefone</th>
-                                <th>Ação</th>
-                            </tr>
+                          <tr>
+                            <th>Nº Protocolo</th>
+                            <th>Cliente</th>
+                            <th>Email</th>
+                            <th>Celular</th>
+                            <th>Telefone</th>
+                            <th>Ação</th>
+                          </tr>
                         </thead>
                         <tbody>
                             <% suportes.forEach(suporte => { %>
                                 <tr>
-                                  <th>
-                                      <img src="/img/apoio_suporte.png" alt="Imagem Suporte" width="48" height="48">
-                                  </th>
                                   <th><%=suporte.id%> </th>
                                   <th><%=suporte.primeiroNome%></th>
-                                  <th><%=suporte.descricao%></th>
                                   <th><%=suporte.email%></th>
                                   <th><%=suporte.celular%></th>
                                   <th><%=suporte.telefone%></th>
@@ -79,10 +73,22 @@
                                             <input type="hidden" name="primeiroNome" value="<%=suporte.primeiroNome%>">
                                             <input type="hidden" name="emailDestinatario" value="<%=suporte.email%>">
                                             <input type="hidden" name="pergunta" value="<%=suporte.descricao%>">
-                                            <div class="mb-3">
-                                              <label for="recipient-name" class="col-form-label">Assunto:</label>
-                                              <textarea class="form-control" id="message-text" rows="5" disabled><%=suporte.descricao%></textarea>
-                                            </div>
+                                            <%if(suporte.descricao.length <= 50){%>
+                                              <div class="mb-3 perguntaCliente">
+                                                <label for="recipient-name" class="col-form-label text-primary"><i class="bi bi-person iconesUsadosChat"></i><%=suporte.primeiroNome + "  "%>Perguntou:</label>
+                                                <textarea class="form-control" id="message-text" rows="1" disabled><%=suporte.descricao%></textarea>
+                                              </div>
+                                            <%}else if(suporte.descricao.length > 50 && suporte.descricao.length <= 150){%>
+                                              <div class="mb-3 perguntaCliente">
+                                                <label for="recipient-name" class="col-form-label text-primary"><i class="bi bi-person iconesUsadosChat"></i><%=suporte.primeiroNome + "  "%>Perguntou:</label>
+                                                <textarea class="form-control" id="message-text" rows="2" disabled><%=suporte.descricao%></textarea>
+                                              </div>
+                                            <%}else{%>
+                                              <div class="mb-3 perguntaCliente">
+                                                <label for="recipient-name" class="col-form-label text-primary"><i class="bi bi-person iconesUsadosChat"></i><%=suporte.primeiroNome + "  "%>Perguntou:</label>
+                                                <textarea class="form-control" id="message-text" rows="3" disabled><%=suporte.descricao%></textarea>
+                                              </div>
+                                            <%}%>
                                             <div class="mb-3">
                                               <label for="message-text" class="col-form-label">Resposta:</label>
                                               <textarea class="form-control" id="message-text" rows="4" name="resposta" required></textarea>
