@@ -1,156 +1,169 @@
-<%- include('../../partials/usuario/head') %> 
-  <title>Agenda Contabilidade</title>
-  <link rel="stylesheet" type="text/css" href="/css/login.css">
-<%- include('../../partials/usuario/head2') %> 
-<body>
-  <%- include('../../partials/usuario/nav') %> 
-    <div class="container col-xl-10 col-xxl-8 px-4 py-5">
-        <div class="row align-items-center g-lg-5 card-login">
-            <div class="col-lg-7">
-                <h1 class="display-4 fw-bold lh-1 mb-3">Faça seu login e começe á desfrutar de nossos serviços!</h1>
-                <p class="col-lg-10 fs-4">Faça seu login, caso ainda não tenha login clique no botão de cadastro e faça seu cadastro é rápido fácil e prático.</p>
-                <p class="col-lg-10 fs-4">Caso tenha dúvida na hora de realizar o <b>cadastro</b> procure o suporte.</p>
-            </div>
-            <div class="col-md-10 mx-auto col-lg-5">
-                <form class="p-4 p-md-5 border rounded-3 bg-light" method="post" action="/login/autentica">
-                    <div class="cabecalhoLogin text-center">
-                        <a class="text-center">
-                            <img src="/img/logo.png" alt="logoAgenda">
-                        </a>
-                    </div>
-                    <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="floatingInput" placeholder=" " name="email" required>
-                        <label for="floatingInput">Email</label>
-                    </div>
-                    <div class="form-floating mb-3">
-                        <input type="password" class="form-control" id="floatingPassword" placeholder=" " name="senha" required>
-                        <label for="floatingPassword">Senha</label>
-                    </div>
-                    <button class="w-100 btn btn-lg btn-primary" type="submit">Entrar</button>
-                    <a class="w-100 btn btn-lg btn-success mt-3" data-bs-toggle="modal" data-bs-target="#exampleModal">Cadastro</a>
-                    <hr class="my-4">
-                    <small class="text-muted">
+<%- include('../../partials/usuario/head') %>
+    <title>Agenda Contabilidade</title>
+    <link rel="stylesheet" type="text/css" href="/css/login.css">
+    <%- include('../../partials/usuario/head2') %>
+
+        <body>
+            <%- include('../../partials/usuario/nav') %>
+                <div class="container col-xl-10 col-xxl-8 px-4 py-5">
+                    <div class="row align-items-center g-lg-5 card-login">
+                        <div class="col-lg-7">
+                            <h1 class="display-4 fw-bold lh-1 mb-3">Faça seu login e começe á desfrutar de nossos serviços!</h1>
+                            <p class="col-lg-10 fs-4">Faça seu login, caso ainda não tenha login clique no botão de cadastro e faça seu cadastro é rápido fácil e prático.</p>
+                            <p class="col-lg-10 fs-4">Caso tenha dúvida na hora de realizar o <b>cadastro</b> procure o suporte.</p>
+                        </div>
+                        <div class="col-md-10 mx-auto col-lg-5">
+                            <form class="p-4 p-md-5 border rounded-3 bg-light" method="post" action="/login/autentica">
+                                <div class="cabecalhoLogin text-center">
+                                    <a class="text-center">
+                                        <img src="/img/logo.png" alt="logoAgenda">
+                                    </a>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="floatingInput" placeholder=" " name="email" required>
+                                    <label for="floatingInput">Email</label>
+                                    <% if (errorEmail != undefined){%>
+                                        <p class="text-danger">
+                                            <%=errorEmail%>
+                                                <i class="bi bi-exclamation-circle"></i>
+                                        </p>
+                                        <%}%>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="password" class="form-control" id="floatingPassword" placeholder=" " name="senha" required>
+                                    <label for="floatingPassword">Senha</label>
+                                    <% if (erroSenha != undefined){%>
+                                        <p class="text-danger">
+                                            <%=erroSenha%>
+                                                <i class="bi bi-exclamation-circle"></i>
+                                        </p>
+                                        <%}%>
+                                </div>
+                                <button class="w-100 btn btn-lg btn-primary" type="submit">Entrar</button>
+                                <a class="w-100 btn btn-lg btn-success mt-3" data-bs-toggle="modal" data-bs-target="#exampleModal">Cadastro</a>
+                                <hr class="my-4">
+                                <small class="text-muted">
                         <a href="">Clique aqui caso tenha esquecido a senha.</a>
                     </small>
-                </form>
-            </div>
-        </div>
+                            </form>
+                        </div>
+                    </div>
 
-        <!-- Modal para Cadastro -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-xl modal-dialog-scrollable">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h6 class="modal-title display-6" id="exampleModalLabel">Cadastre-se  <i class="bi bi-person-check m-3 text-primary"></i></h6>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="card">
-                        <div class="card-body">
-                            <form action="/cadastro" method="post" id="cadastraCliente" name="formUser" onsubmit="confirmCadastro()">
-                                <div class="row g-2">
-                                    <div class="col-md">
-                                        <label>Nome Completo</label>
-                                        <div class="form-floating">
-                                            <input type="text" class="form-control" name="nome" required>
-                                        </div>
-                                    </div>
-                                    <div class="col-md">
-                                        <label>Email</label>
-                                        <div class="form-floating">
-                                            <input type="email" class="form-control" name="email" required>
-                                        </div>
-                                    </div>
+                    <!-- Modal para Cadastro -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-xl modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h6 class="modal-title display-6" id="exampleModalLabel">Cadastre-se <i class="bi bi-person-check m-3 text-primary"></i></h6>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
-                                <br>
-                                <div class="row g-2">
-                                    <div class="col-md">
-                                        <label>CPF</label>
-                                        <div class="form-floating">
-                                            <input type="text" class="form-control" name="cpf" id="cpf" required>
-                                        </div>
-                                    </div>
-                                    <div class="col-md">
-                                        <label>CEP</label>
-                                        <div class="form-floating">
-                                            <input type="text" class="form-control" name="cep" id="cep" size="10" maxlength="9" onblur="pesquisacep(this.value);" required>
-                                        </div>
-                                    </div>
-                                </div>
-                                <br>
-                                <div class="row g-2">
-                                    <div class="col-md">
-                                        <label>Rua</label>
-                                        <div class="form-floating">
-                                            <input name="rua" type="text" id="rua" size="60" class="form-control" required>
-                                        </div>
-                                    </div>
-                                    <div class="col-md">
-                                        <label>Bairro</label>
-                                        <div class="form-floating">
-                                            <input name="bairro" type="text" id="bairro" size="40" class="form-control" required>
-                                        </div>
-                                    </div>
-                                </div>
-                                <br>
-                                <div class="row g-2">
-                                    <div class="col-md">
-                                        <label>Cidade</label>
-                                        <div class="form-floating">
-                                            <input name="cidade" type="text" id="cidade" size="40" class="form-control" required>
-                                        </div>
-                                    </div>
-                                    <div class="col-md">
-                                        <label>Estado</label>
-                                        <div class="form-floating">
-                                            <input name="uf" type="text" id="uf" size="2" class="form-control" required>
-                                        </div>
-                                    </div>
-                                </div>
-                                <br>
-                                <div class="row g-2">
-                                    <div class="col-md">
-                                        <label>Data de Nascimento</label>
-                                        <div class="form-floating">
-                                            <input type="date" class="form-control" name="dataNascimento" required>
-                                        </div>
-                                    </div>
-                                    <div class="col-md">
-                                        <label>Selecione uma categoria de acordo com o seu grupo</label>
-                                        <div class="form-floating">
-                                            <% if(Object.values(categorias).length === 0){ %>
-                                                <select class="form-select" id="floatingSelect" aria-label="Floating label select example" name="categoriaCliente" disabled>
+                                <div class="modal-body">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <form action="/cadastro" method="post" id="cadastraCliente" name="formUser" onsubmit="confirmCadastro()">
+                                                <div class="row g-2">
+                                                    <div class="col-md">
+                                                        <label>Nome Completo</label>
+                                                        <div class="form-floating">
+                                                            <input type="text" class="form-control" name="nome" required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md">
+                                                        <label>Email</label>
+                                                        <div class="form-floating">
+                                                            <input type="email" class="form-control" name="email" required>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br>
+                                                <div class="row g-2">
+                                                    <div class="col-md">
+                                                        <label>CPF</label>
+                                                        <div class="form-floating">
+                                                            <input type="text" class="form-control" name="cpf" id="cpf" required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md">
+                                                        <label>CEP</label>
+                                                        <div class="form-floating">
+                                                            <input type="text" class="form-control" name="cep" id="cep" size="10" maxlength="9" onblur="pesquisacep(this.value);" required>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br>
+                                                <div class="row g-2">
+                                                    <div class="col-md">
+                                                        <label>Rua</label>
+                                                        <div class="form-floating">
+                                                            <input name="rua" type="text" id="rua" size="60" class="form-control" required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md">
+                                                        <label>Bairro</label>
+                                                        <div class="form-floating">
+                                                            <input name="bairro" type="text" id="bairro" size="40" class="form-control" required>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br>
+                                                <div class="row g-2">
+                                                    <div class="col-md">
+                                                        <label>Cidade</label>
+                                                        <div class="form-floating">
+                                                            <input name="cidade" type="text" id="cidade" size="40" class="form-control" required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md">
+                                                        <label>Estado</label>
+                                                        <div class="form-floating">
+                                                            <input name="uf" type="text" id="uf" size="2" class="form-control" required>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br>
+                                                <div class="row g-2">
+                                                    <div class="col-md">
+                                                        <label>Data de Nascimento</label>
+                                                        <div class="form-floating">
+                                                            <input type="date" class="form-control" name="dataNascimento" required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md">
+                                                        <label>Selecione uma categoria de acordo com o seu grupo</label>
+                                                        <div class="form-floating">
+                                                            <% if(Object.values(categorias).length === 0){ %>
+                                                                <select class="form-select" id="floatingSelect" aria-label="Floating label select example" name="categoriaCliente" disabled>
                                                     <option value="0">Selecione uma categoria</option>
                                                 </select>
-                                            <% }else{ %>
-                                                <select class="form-select" id="floatingSelect" aria-label="Floating label select example" name="categoriaCliente">
+                                                                <% }else{ %>
+                                                                    <select class="form-select" id="floatingSelect" aria-label="Floating label select example" name="categoriaCliente">
                                                     <option value="0">Selecione uma categoria</option>
                                                     <%categorias.forEach(categoria => { %>
                                                         <option value="<%=categoria.id%>"><%=categoria.nome%></option>
                                                     <%})%> 
                                                 </select>
-                                            <% } %> 
-                                        </div>
-                                    </div>
-                                </div>
-                                <br>
-                                <div class="row g-3">
-                                    <div class="col-md">
-                                        <label>Número de Identidade</label>
-                                        <div class="form-floating">
-                                            <input type="text" class="form-control" name="numeroIdentidade" id="numeroRg" required>
-                                        </div>
-                                    </div>
-                                    <div class="col-md">
-                                        <label>Orgão Expeditor</label>
-                                        <div class="form-floating">
-                                            <input type="text" class="form-control" name="orgaoExpeditor" required>
-                                        </div>
-                                    </div>
-                                    <div class="col-md">
-                                        <label>Estado da Identidade</label>
-                                        <div class="form-floating">
-                                            <select class="form-select" id="floatingSelect" aria-label="Floating label select example" name="estadoRg">
+                                                                    <% } %>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br>
+                                                <div class="row g-3">
+                                                    <div class="col-md">
+                                                        <label>Número de Identidade</label>
+                                                        <div class="form-floating">
+                                                            <input type="text" class="form-control" name="numeroIdentidade" id="numeroRg" required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md">
+                                                        <label>Orgão Expeditor</label>
+                                                        <div class="form-floating">
+                                                            <input type="text" class="form-control" name="orgaoExpeditor" required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md">
+                                                        <label>Estado da Identidade</label>
+                                                        <div class="form-floating">
+                                                            <select class="form-select" id="floatingSelect" aria-label="Floating label select example" name="estadoRg">
                                                 <option value="0">Selecione um estado</option>
                                                 <option value="AC">Acre</option>
                                                 <option value="AL">Alagoas</option>
@@ -180,69 +193,68 @@
                                                 <option value="SE">Sergipe</option>
                                                 <option value="TO">Tocantins</option>
                                             </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br>
+                                                <div class="row g-2">
+                                                    <div class="col-md">
+                                                        <label>Telefone</label>
+                                                        <div class="form-floating">
+                                                            <input type="text" class="form-control" name="telefone" id="telefone" required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md">
+                                                        <label>Celular</label>
+                                                        <div class="form-floating">
+                                                            <input type="text" class="form-control" name="celular" id="celular" required>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br>
+                                                <div class="row g-2">
+                                                    <div class="col-md">
+                                                        <label>Senha</label>
+                                                        <div class="form-floating">
+                                                            <input type="password" class="form-control" name="senha" id="senha" required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md">
+                                                        <label>Confirme sua senha</label>
+                                                        <div class="form-floating">
+                                                            <input type="password" class="form-control" name="confirmaSenha" required>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <% if(Object.values(admins).length === 0){ %>
+                                                    <input type="hidden" name="administrador" value="<%=null%>">
+                                                    <% }else{ %>
+                                                        <% admins.forEach(admin => { %>
+                                                            <input type="hidden" name="administrador" value="<%=admin.id%>">
+                                                            <% });%>
+                                                                <% } %>
+                                                                    <br>
+                                                                    <div class="form-check form-switch">
+                                                                        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" name="confirmaEmail" value="1">
+                                                                        <label class="form-check-label" for="flexSwitchCheckChecked">Enviar e-mail de confirmação.</label>
+                                                                    </div>
+                                                                    <br>
+                                                                    <div class="d-grid col-6 gap-2 mx-auto btnCadastro">
+                                                                        <button class="btn btn-success" onclick="return verificaSeletores()">Cadastrar</button>
+                                                                    </div>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
-                                <br>
-                                <div class="row g-2">
-                                    <div class="col-md">
-                                        <label>Telefone</label>
-                                        <div class="form-floating">
-                                            <input type="text" class="form-control" name="telefone" id="telefone" required>
-                                        </div>
-                                    </div>
-                                    <div class="col-md">
-                                        <label>Celular</label>
-                                        <div class="form-floating">
-                                            <input type="text" class="form-control" name="celular" id="celular" required>
-                                        </div>
-                                    </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
                                 </div>
-                                <br>
-                                <div class="row g-2">
-                                    <div class="col-md">
-                                        <label>Senha</label>
-                                        <div class="form-floating">
-                                            <input type="password" class="form-control" name="senha" id="senha" required>
-                                        </div>
-                                    </div>
-                                    <div class="col-md">
-                                        <label>Confirme sua senha</label>
-                                        <div class="form-floating">
-                                            <input type="password" class="form-control" name="confirmaSenha" required>
-                                        </div>
-                                    </div>
-                                </div>
-                                <% if(Object.values(admins).length === 0){ %>
-                                    <input type="hidden" name="administrador" value="<%=null%>">
-                                <% }else{ %>
-                                    <% admins.forEach(admin => { %>
-                                        <input type="hidden" name="administrador" value="<%=admin.id%>">
-                                    <% });%> 
-                                <% } %>
-                                <br>
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" name="confirmaEmail" value="1">
-                                    <label class="form-check-label" for="flexSwitchCheckChecked">Enviar e-mail de confirmação.</label>
-                                </div>
-                                <br>
-                                <div class="d-grid col-6 gap-2 mx-auto btnCadastro">
-                                    <button class="btn btn-success" onclick="return verificaSeletores()">Cadastrar</button>
-                                </div>
-                            </form>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
-                </div>
-            </div>
-            </div>
-        </div>
-    </div>
-    <%- include('../../partials/usuario/footer2') %> 
-  </div>
-</body>
-<%- include('../../partials/usuario/footer1') %> 
-<script src="/js/cadastroCliente.js"></script>
-
+                <%- include('../../partials/usuario/footer2') %>
+                    </div>
+        </body>
+        <%- include('../../partials/usuario/footer1') %>
+            <script src="/js/cadastroCliente.js"></script>

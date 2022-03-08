@@ -90,12 +90,21 @@ router.post('/email/servicos', (req, res) => {
 // PÁGINA VOLTADA PARA O LOGIN DO USUÁRIO
 router.get('/login', (req, res) => {
 
+    var erroSenha = req.flash("erroSenha");
+    var errorEmail = req.flash("errorEmail");
+
+    erroSenha = (erroSenha == undefined || erroSenha.length == 0) ? undefined : erroSenha = erroSenha;
+
+    errorEmail = (errorEmail == undefined || errorEmail.length == 0) ? undefined : errorEmail = errorEmail;
+
     Categoria.findAll().then(categorias => {
         Admin.findAll().then(admins => {
             if (categorias != undefined && admins != undefined) {
                 res.render('usuario/login', {
                     categorias: categorias,
                     admins: admins,
+                    erroSenha: erroSenha,
+                    errorEmail: errorEmail
                 });
             }
         });
@@ -138,9 +147,16 @@ router.post('/login/autentica', (req, res) => {
                     }
                     res.redirect('/user/index');
                 } else {
-                    res.redirect('/login')
+
+                    var erroSenha;
+                    erroSenha = "Senha incorreta";
+                    req.flash("erroSenha", erroSenha);
+                    res.redirect('/login');
                 }
             } else {
+                var errorEmail;
+                errorEmail = "E-mail inválido";
+                req.flash("errorEmail", errorEmail);
                 res.redirect('/login');
             }
         });
