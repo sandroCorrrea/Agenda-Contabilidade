@@ -64,6 +64,6 @@ const Administrador = connection.define('administradores', {
     }
 });
 
-//Administrador.sync({force: true});
+//Administrador.sync({force: false});
 
 module.exports = Administrador;

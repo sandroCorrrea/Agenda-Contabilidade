@@ -74,6 +74,6 @@ Usuario.belongsTo(CategoriaUser);
 
 Usuario.belongsTo(Admin);
 
-//Usuario.sync({force: true});
+//Usuario.sync({force: false});
 
 module.exports = Usuario;

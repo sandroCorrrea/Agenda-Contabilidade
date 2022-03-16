@@ -1,25 +1,29 @@
-<%- include('../../partials/usuario/head') %> 
-  <title>Agenda Contabilidade</title>
-  <link rel="stylesheet" type="text/css" href="/css/indexUserLog.css">
-<%- include('../../partials/usuario/head2') %> 
-<body>
-  <%- include('../../partials/UserLog/nav') %> 
-  <div class="container">
-    <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg templateIndex">
-      <div class="col-lg-7 p-3 p-lg-5 pt-lg-3">
-        <h1 class="display-4 fw-bold lh-1">Bem Vindo ao seu painel de serviços !</h1>
-        <p class="lead">Por aqui você possui um maior controle sob as suas atividades, voltado para nosso novo sistema contábil, faça um bom proveito de nossas funcionalidade!</p>
-        <div class="d-grid gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3">
-          <a href="/user/solicitar/servico" type="button" class="btn btn-primary btn-lg px-4 me-md-2 fw-bold">Serviços</a>
-          <a href="/user/solicitacoes" type="button" class="btn btn-outline-secondary btn-lg px-4">Solicitações</a>
-        </div>
-      </div>
-      <div class="col-lg-5 overflow-hidden shadow-lg">
-        <img src="/img/indexUserLog.png" class="imgTemplate">
-      </div>
+<%-include('../../partials/UserLog/head')%> 
+  <!-- AQUI ENTRA O ESTILO PESSOAL -->
+  <link rel="stylesheet" type="text/css" href="/css/conteudoIndex.css">
+<% -include('../../partials/UserLog/head2') %> 
+<body class="d-flex h-100 text-center text-white bg-primary">
+  <div class="container d-flex w-100 h-100 p-3 mx-auto flex-column">
+    <%-include('../../partials/UserLog/nav') %> 
+    <div class="imagemIndex">
+      <a>
+        <img src="/img/logo.png" alt="Logo Agenda Contabilidade">
+      </a>
     </div>
+    <main class="px-3">
+      <div>
+        <p class="lead boasVindas">
+          <b>Olá Seja bem vindo ao seu painel de cliente!</b>
+        </p>
+        <p class="descricaoServicos">Faça aqui suas solicitações de serviços e acompanhe em tempo real o andamento dos seus serviços.</p>
+      </div>
+      <p class="lead">
+        <a href="#" class="btn btn-lg btn-secondary fw-bold border-white bg-white">Solicitar Serviço</a>
+      </p>
+    </main>
+    <footer class="mt-auto text-white-50">
+      <p class="rodapeDireitos">&copy;Alguns Direitos Reservados.</p>
+    </footer>
   </div>
 </body>
-<%- include('../../partials/usuario/footer1') %> 
-<script src="/js/cadastroCliente.js"></script>
-
+<%-include('../../partials/UserLog/footer.ejs')%>

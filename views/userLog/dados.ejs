@@ -1,163 +1,185 @@
-<%- include('../../partials/usuario/head') %> 
-  <title>Agenda Contabilidade</title>
+<%-include('../../partials/UserLog/head')%> 
+  <!-- AQUI ENTRA O ESTILO PESSOAL -->
   <link rel="stylesheet" type="text/css" href="/css/loginUserLog.css">
-<%- include('../../partials/usuario/head2') %> 
-<body>
-  <%- include('../../partials/UserLog/nav') %> 
-    <div class="container">
-       <div class="card">
-        <div class="card-header text-center">
-            <h6 class="display-5">Meus Dados</h6>
-            <i class="bi bi-person-bounding-box text-primary" style="font-size: 5em"></i>
+<% -include('../../partials/UserLog/head2') %> 
+<body class="d-flex h-100 text-center text-white bg-primary">
+  <div class="container d-flex w-100 h-100 p-3 mx-auto flex-column">
+    <%-include('../../partials/UserLog/nav') %> 
+    <main class="px-3">
+      <h2>Meus Dados  <i class="bi bi-person-badge"></i></h2>
+      <div class="card text-center bg-dark">
+        <div class="card-header">
+          <ul class="nav nav-pills card-header-pills">
+            <li class="nav-item itensDados">
+              <a class="nav-link" href="#" onclick="exibeDadosUser('/user/dados/endereco')"><i class="bi bi-house-door"></i>  Logradouro</a>
+            </li>
+            <li class="nav-item itensDados">
+              <a class="nav-link" href="#" onclick="exibeDadosUser('/user/dados/dados_pessoais')"><i class="bi bi-person-circle"></i>  Dados Pessoais</a>
+            </li>
+            <li class="nav-item itensDados">
+              <a class="nav-link" href="#" onclick="exibeDadosUser('/user/dados/acesso')" ><i class="bi bi-book"></i>  Acesso</a>
+            </li>
+          </ul>
         </div>
-        <div class="card-body">
-          <form action="/user/edit" method="post" name="formEditCliente" onsubmit="confirmFormulario()">
-            <div class="g-3 row">
-              <div class="col-md">
-                <div class="form-floating">
-                  <input type="text" name="nome" class="form-control" value="<%=cliente.nome%>" placeholder=" " required>
-                  <label>Nome</label>
+        <div class="card-body bg-dark">
+          <h5 class="card-title">Veja Aqui as suas Informações!</h5>
+          <div class="iconeInformacao text-center">
+            <i class="bi bi-person-rolodex" style="font-size: 2rem;"></i>
+          </div>
+          <div id="logradouro"></div>
+          <a href="#" class="btn btn-success mt-3" data-bs-toggle="modal" data-bs-target="#exibeTodaInformacoes">Todas Informações</a>
+        </div>
+      </div>
+    </main>
+    <!-- Modal Com Todas Informações -->
+    <div class="modal fade" id="exibeTodaInformacoes" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-xl modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title text-primary display-6" id="exampleModalLabel">Atualize Suas Informações <i class="bi bi-pencil-square"></i></h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <form action="/user/edit" method="post" name="formEditCliente">
+            <div class="modal-body">
+              <div class="g-3 row">
+                <div class="col-md">
+                  <div class="form-floating">
+                    <input type="text" name="nome" class="form-control" value="<%=cliente.nome%>" placeholder=" " disabled required>
+                    <label class="text-dark">Nome</label>
+                  </div>
+                </div>
+                <div class="col-md">
+                  <div class="form-floating">
+                    <input type="email" name="email" class="form-control" value="<%=cliente.email%>" placeholder=" " required>
+                    <label class="text-dark">Email</label>
+                  </div>
+                </div>
+                <div class="col-md">
+                  <div class="form-floating">
+                    <input type="text" name="cpf" class="form-control" value="<%=cliente.cpf%>" disabled placeholder=" " required>
+                    <label class="text-dark">CPF</label>
+                  </div>
                 </div>
               </div>
-              <div class="col-md">
-                <div class="form-floating">
-                  <input type="email" name="email" class="form-control" value="<%=cliente.email%>" placeholder=" " required>
-                  <label>Email</label>
+              <br>
+              <div class="g-4 row">
+                <div class="col-md">
+                  <div class="form-floating">
+                    <input type="text" name="cep" class="form-control" value="<%=cliente.cep%>" placeholder=" " id="cep" onblur="pesquisacep(this.value);" required>
+                    <label class="text-dark">Cep</label>
+                  </div>
+                </div>
+                <div class="col-md">
+                  <div class="form-floating">
+                    <input type="text" name="rua" class="form-control" value="<%=cliente.rua%>" id="rua" placeholder=" " required>
+                    <label class="text-dark">Rua</label>
+                  </div>
+                </div>
+                <div class="col-md">
+                  <div class="form-floating">
+                    <input type="text" name="bairro" class="form-control" value="<%=cliente.bairro%>" id="bairro" placeholder=" " required>
+                    <label class="text-dark">Bairro</label>
+                  </div>
+                </div>
+                <div class="col-md">
+                  <div class="form-floating">
+                    <input type="text" name="cidade" class="form-control" value="<%=cliente.cidade%>" id="cidade" placeholder=" " required>
+                    <label class="text-dark">Cidade</label>
+                  </div>
                 </div>
               </div>
-              <div class="col-md">
-                <div class="form-floating">
-                  <input type="text" name="cpf" class="form-control" value="<%=cliente.cpf%>" disabled placeholder=" " required>
-                  <label>CPF</label>
+              <br>
+              <div class="g-4 row">
+                <div class="col-md">
+                  <div class="form-floating">
+                    <input type="text" name="estado" class="form-control" value="<%=cliente.estado%>" id="uf" placeholder=" " required>
+                    <label class="text-dark">Estado</label>
+                  </div>
+                </div>
+                <div class="col-md">
+                  <div class="form-floating">
+                    <input type="text" name="data_nascimento" class="form-control" value="<%=agenda.DataBanco(cliente.data_nascimento)%>" disabled placeholder=" " required>
+                    <label class="text-dark">Data de Nascimento</label>
+                  </div>
+                </div>
+                <div class="col-md">
+                  <div class="form-floating">
+                    <input type="text" name="numero_identidade" class="form-control" value="<%=cliente.numero_identidade%>" disabled placeholder=" " required>
+                    <label class="text-dark">Número de Indentidade</label>
+                  </div>
+                </div>
+                <div class="col-md">
+                  <div class="form-floating">
+                    <input type="text" name="orgao_expeditor_identidade" class="form-control" value="<%=cliente.orgao_expeditor_identidade%>" disabled placeholder=" " required>
+                    <label class="text-dark">Orgão Expeditor</label>
+                  </div>
+                </div>
+              </div>
+              <br>
+              <div class="g-4 row">
+                <div class="col-md">
+                  <div class="form-floating">
+                    <input type="text" name="estado_identidade" class="form-control" value="<%=cliente.estado_identidade%>" disabled placeholder=" " required>
+                    <label class="text-dark">Estado Indentidade</label>
+                  </div>
+                </div>
+                <div class="col-md">
+                  <div class="form-floating">
+                    <input type="text" name="telefone" class="form-control" value="<%=cliente.telefone%>" id="telefone" placeholder=" " required>
+                    <label class="text-dark">Telefone</label>
+                  </div>
+                </div>
+                <div class="col-md">
+                  <div class="form-floating">
+                    <input type="text" name="celular" class="form-control" value="<%=cliente.celular%>" id="celular" placeholder=" " required>
+                    <label class="text-dark">Celular</label>
+                  </div>
+                </div>
+                <div class="col-md">
+                  <div class="form-floating">
+                    <select class="form-select" id="floatingSelect" aria-label="Floating label select example" name="categoriaCliente">
+                      <% categorias.forEach(categoria => { %>
+                        <% if(categoria.id == cliente.clienteCategoriumId){ %>
+                          <option value="<%=categoria.id%>" selected><%=categoria.nome%></option>
+                        <% }else{ %>
+                          <option value="<%=categoria.id%>"><%=categoria.nome%></option>
+                        <% } %> 
+                      <% }); %> 
+                    </select>
+                    <label class="text-dark">Categoria</label>
+                  </div>
+                </div>
+              </div>
+              <br>
+              <div class="g-2 row">
+                <div class="col-md">
+                  <div class="form-floating">
+                    <input type="password" name="senha" class="form-control" value="<%=cliente.senha%>" placeholder=" " required>
+                    <label class="text-dark">Senha</label>
+                    <%=senhaError%> 
+                  </div>
+                </div>
+                <div class="col-md">
+                  <div class="form-floating">
+                    <input type="password" name="confirmaSenha" class="form-control" value="<%=cliente.senha%>" placeholder=" " required>
+                    <label class="text-dark">Confirma Senha</label>
+                    <%=senhaError%> 
+                  </div>
                 </div>
               </div>
             </div>
-            <br>
-            <div class="g-2 row">
-              <div class="col-md">
-                <div class="form-floating">
-                  <input type="text" name="cep" class="form-control" value="<%=cliente.cep%>" placeholder=" " required>
-                  <label>Cep</label>
-                </div>
-              </div>
-              <div class="col-md">
-                <div class="form-floating">
-                  <input type="text" name="rua" class="form-control" value="<%=cliente.rua%>" placeholder=" " required>
-                  <label>Rua</label>
-                </div>
-              </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-secondary text-light" name="id" value="<%=cliente.id%>" onclick="return confirmFormulario();">Atualizar</button>
+              <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
             </div>
-            <br>
-            <div class="g-3 row">
-              <div class="col-md">
-                <div class="form-floating">
-                  <input type="text" name="bairro" class="form-control" value="<%=cliente.bairro%>" placeholder=" " required>
-                  <label>Bairro</label>
-                </div>
-              </div>
-              <div class="col-md">
-                <div class="form-floating">
-                  <input type="text" name="cidade" class="form-control" value="<%=cliente.cidade%>" placeholder=" " required>
-                  <label>Cidade</label>
-                </div>
-              </div>
-              <div class="col-md">
-                <div class="form-floating">
-                  <input type="text" name="estado" class="form-control" value="<%=cliente.estado%>" placeholder=" " required>
-                  <label>Estado</label>
-                </div>
-              </div>
-            </div>
-            <br>
-            <div class="g-2 row">
-              <div class="col-md">
-                <div class="form-floating">
-                  <input type="text" name="data_nascimento" class="form-control" value="<%=agenda.DataBanco(cliente.data_nascimento)%>" disabled placeholder=" " required>
-                  <label>Data de Nascimento</label>
-                </div>
-              </div>
-              <div class="col-md">
-                <div class="form-floating">
-                  <input type="text" name="numero_identidade" class="form-control" value="<%=cliente.numero_identidade%>" disabled placeholder=" " required>
-                  <label>Número de Indentidade</label>
-                </div>
-              </div>
-            </div>
-            <br>
-            <div class="g-2 row">
-              <div class="col-md">
-                <div class="form-floating">
-                  <input type="text" name="orgao_expeditor_identidade" class="form-control" value="<%=cliente.orgao_expeditor_identidade%>" disabled placeholder=" " required>
-                  <label>Orgão Expeditor</label>
-                </div>
-              </div>
-              <div class="col-md">
-                <div class="form-floating">
-                  <input type="text" name="estado_identidade" class="form-control" value="<%=cliente.estado_identidade%>" disabled placeholder=" " required>
-                  <label>Estado Indentidade</label>
-                </div>
-              </div>
-            </div>
-            <br>
-            <div class="g-2 row">
-              <div class="col-md">
-                <div class="form-floating">
-                  <input type="text" name="telefone" class="form-control" value="<%=cliente.telefone%>" placeholder=" " required>
-                  <label>Telefone</label>
-                </div>
-              </div>
-              <div class="col-md">
-                <div class="form-floating">
-                  <input type="text" name="celular" class="form-control" value="<%=cliente.celular%>" placeholder=" " required>
-                  <label>Celular</label>
-                </div>
-              </div>
-            </div>
-            <hr>
-            <div class="g-1 row">
-              <div class="col-md">
-                <div class="form-floating">
-                  <select class="form-select" id="floatingSelect" aria-label="Floating label select example" name="categoriaCliente">
-                    <% categorias.forEach(categoria => { %>
-                      <% if(categoria.id == cliente.clienteCategoriumId){ %>
-                        <option value="<%=categoria.id%>" selected><%=categoria.nome%></option>
-                      <% }else{ %>
-                        <option value="<%=categoria.id%>"><%=categoria.nome%></option>
-                      <% } %> 
-                    <% }); %> 
-                  </select>
-                  <label for="floatingSelect">Categoria</label>
-                </div>
-              </div>
-            </div>
-            <br>
-            <div class="g-2 row">
-              <div class="col-md">
-                <div class="form-floating">
-                  <input type="password" name="senha" class="form-control" value="<%=cliente.senha%>" placeholder=" " required>
-                  <label>Senha</label>
-                  <%=senhaError%> 
-                </div>
-              </div>
-              <div class="col-md">
-                <div class="form-floating">
-                  <input type="password" name="confirmaSenha" class="form-control" value="<%=cliente.senha%>" placeholder=" " required>
-                  <label>Confirma Senha</label>
-                  <%=senhaError%> 
-                </div>
-              </div>
-            </div>
-            <br>
-            <div class="d-grid col-6 gap-2 mx-auto mt-5 mb-3 buttonEdit" onclick="return validaSenha()">
-                <button class="btn btn-warning" name="id" value="<%=cliente.id%>">
-                  <i class="bi bi-pencil"></i>
-                  Atualizar
-                </button>
-            </div>           
           </form>
         </div>
-       </div>
+      </div>
     </div>
+    <footer class="mt-auto text-white-50">
+      <p class="rodapeDireitos">&copy;Alguns Direitos Reservados.</p>
+    </footer>
+  </div>
 </body>
-<%- include('../../partials/usuario/footer1') %> 
-<script src="/js/editCliente.js"></script>
+<%-include('../../partials/UserLog/footer.ejs')%>
+<script type="text/javascript" src="/js/exibeInformacoes.js"></script>

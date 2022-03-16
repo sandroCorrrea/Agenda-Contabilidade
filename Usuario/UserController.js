@@ -14,6 +14,7 @@ const SuporteUser = require('../src/Suporte');
 const EmailInteresse = require('./Emails');
 const authUser = require('../middlewares/userAuth');
 const authAdmin = require('../middlewares/adminAuth');
+const SolicitaServico = require('./SolicitaServico');
 
 // INSTÂNCIAS USADAS
 const agenda = new Agenda();
@@ -67,7 +68,9 @@ router.post('/suporte/dados', (req, res) => {
 
 router.get('/servicos', (req, res) => {
 
-    Servicos.findAll().then(servicos => {
+    Servicos.findAll({
+        group:"nome"
+    }).then(servicos => {
         res.render('usuario/servicos', {
             servicos: servicos
         });
@@ -342,7 +345,6 @@ router.get('/user/dados', authUser, (req, res) => {
 
 router.post('/user/edit', authUser, (req, res) => {
     var { id, nome, email, cpf, cep, rua, bairro, cidade, estado, data_nascimento, numero_identidade, orgao_expeditor_identidade, estado_identidade, telefone, celular, categoriaCliente, senha, confirmaSenha } = req.body;
-
     if (senha == confirmaSenha) {
         Cliente.findOne({
             where: { id: id }
@@ -357,8 +359,10 @@ router.post('/user/edit', authUser, (req, res) => {
             } else {
                 res.redirect('/user/dados');
             }
+        }).catch(erro => {
+            console.log(erro);
         });
-    } else {
+    }else {
         var erroSenhaDiferentes;
         erroSenhaDiferentes = "As senhas informadas estão diferentes !";
         req.flash("erroSenhaDiferentes", erroSenhaDiferentes);
@@ -369,13 +373,20 @@ router.post('/user/edit', authUser, (req, res) => {
 router.get('/user/solicitar/servico', authUser, (req, res) => {
     var nomeUser = req.session.usuario.nome;
 
-    Servicos.findAll({
-        where: { clienteCategoriumId: req.session.usuario.service }
-    }).then(servicos => {
-        res.render('userLog/solicitaServicoes', {
-            nome: nomeUser.split(" "),
-            servicos: servicos
+    Cliente.findOne({
+        where:{cpf: req.session.usuario.cpf}
+    }).then(usuario => {
+        Servicos.findAll({
+            where: { clienteCategoriumId: req.session.usuario.service }
+        }).then(servicos => {
+            res.render('userLog/solicitaServicoes', {
+                nome: nomeUser.split(" "),
+                servicos: servicos,
+                usuario: usuario
+            });
         });
+    }).catch(erro => {
+        console.log(erro);
     });
 });
 
@@ -385,6 +396,76 @@ router.get('/user/solicitacoes', authUser, (req, res) => {
     res.render('userLog/solicitacoes', {
         nome: nomeUser.split(" ")
     });
+});
+
+router.get('/user/dados/endereco', authUser, (req, res) => {
+    Cliente.findOne({
+        where: {
+            cpf: req.session.usuario.cpf
+        }
+    }).then(cliente => {
+        Categoria.findAll().then(categorias => {
+            if (categorias != undefined) {
+                res.render('userLog/logradouro', {
+                    cliente: cliente,
+                    agenda: agenda,
+                    categorias: categorias
+                });
+            }
+        }).catch(erro => {
+            console.log(erro);
+        })
+    }).catch(erro => {
+        console.log(erro);
+    });
+});
+
+router.get('/user/dados/dados_pessoais', authUser, (req, res) => {
+
+    Cliente.findOne({
+        where: {
+            cpf: req.session.usuario.cpf
+        }
+    }).then(cliente => {
+        Categoria.findAll().then(categorias => {
+            if (categorias != undefined) {
+                res.render('userLog/dadosPessoais', {
+                    cliente: cliente,
+                    agenda: agenda,
+                    categorias: categorias
+                });
+            }
+        }).catch(erro => {
+            console.log(erro);
+        })
+    }).catch(erro => {
+        console.log(erro);
+    });
+});
+
+router.get('/user/dados/acesso', authUser, (req, res) => {
+
+    Cliente.findOne({
+        where: {cpf: req.session.usuario.cpf},
+        include:[{model: Categoria}]
+    }).then(cliente => {
+        if(cliente != undefined){
+            res.render('userLog/acesso', {
+                cliente: cliente,
+                agenda: agenda
+            });
+        }else{
+            res.redirect('/user/dados/dados_pessoais');
+        }
+    }).catch(erro => {
+        console.log(erro);
+    });
+});
+
+router.post('/user/solicita/servico' , authUser, (req, res) => {
+    var {nome, observacao, cliente} = req.body;
+
+    user.InserirServicoParaCliente(res, SolicitaServico, nome, observacao, cliente);
 });
 
 module.exports = router;

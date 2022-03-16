@@ -1,38 +1,20 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="/user/index">
-        <img src="/img/logo.png" alt="Agenda">
+<!-- BORÁ PEGAR O NOME E TRATA-LÓ -->
+<% var novoNome = nome[0].toString() %> 
+<% var nomeUpper = novoNome[0].toUpperCase() + novoNome.slice(1); %>
+<header class="mb-auto">
+  <div>
+    <a href="/user/index" class="text-light nomeEmpresa" style="text-decoration: none;">
+      <h3 class="float-md-start mb-0">AGENDA</h3>
+    </a>
+    <nav class="nav nav-masthead justify-content-center float-md-end">
+      <a class="nav-link usuarioLogado" aria-current="page" href="/user/index">Home</a>
+      <a class="nav-link usuarioLogado" href="#">Históricos</a>
+      <a class="nav-link usuarioLogado" href="/user/solicitar/servico">Serviços</a>
+      <a class="nav-link usuarioLogado" href="/user/dados">
+        <i class="bi bi-person-circle usuarioLogado"></i>
+        <%=nomeUpper%> 
       </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <% var novoNome = nome[0].toString() %> 
-            <% var nomeUpper = novoNome[0].toUpperCase() + novoNome.slice(1); %> 
-            <a href="/user/dados" class="linkItens nav-link active">
-                <i class="bi bi-person"></i> <%=nomeUpper%> 
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="/user/solicitacoes" class="linkItens nav-link active">
-                <i class="bi bi-clipboard-plus"></i> Solicitações
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="/user/solicitar/servico" class="linkItens nav-link active">
-                <i class="bi bi-folder-symlink"></i> Solicitar
-            </a>
-          </li>
-        </ul>
-        <ul class="navbar-nav linkEntrar">
-          <li class="nav-item">
-            <a href="/login" class="linkItens nav-link active">
-                <i class="bi bi-box-arrow-right"></i> Sair
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
+      <a class="nav-link usuarioLogado" href="#">Sair</i></a>
+    </nav>
+  </div>
+</header>

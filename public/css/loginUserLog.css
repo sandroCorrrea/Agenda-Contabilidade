@@ -1,15 +1,11 @@
-.card{
-    margin-top: 20vh;
-    background: none;
-    border: none;
+.nav-link{
+    color: whitesmoke;
 }
-.card-header{
-    background: none;
-    border: none;
+.itensDados{
+    margin-left: 15%;
 }
-.card-body{
-    background: none;
-}
-.buttonEdit{
-    width: 20%;
+.iconeInformacao{
+    width: 100%;
+    height: 45px;
+    margin-bottom: 3vh;
 }

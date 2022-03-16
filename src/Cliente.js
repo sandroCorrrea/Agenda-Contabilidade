@@ -69,6 +69,18 @@ class Cliente extends Agenda{
         }
     }
 
+    InserirServicoParaCliente(res, modal, nome, observacao, cliente){
+        
+        modal.create({
+            assunto  : nome,
+            descricao: observacao,
+            clienteId: cliente,
+        }).then(() => {
+            res.redirect('/user/solicitar/servico');
+        }).catch(erro => {
+            console.log(erro);
+        });
+    }
 }
 
 module.exports = Cliente;

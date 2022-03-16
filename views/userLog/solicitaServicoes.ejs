@@ -1,83 +1,102 @@
-<%- include('../../partials/usuario/head') %> 
-  <title>Agenda Contabilidade</title>
-  <link rel="stylesheet" type="text/css" href="/css/solicitaServico.css">
-<%- include('../../partials/usuario/head2') %> 
-<body>
-  <%- include('../../partials/UserLog/nav') %> 
-    <div class="container">
-        <div class="card">
-            <div class="card-header">
-                <h6 class="display-5 text-center">Solicite um Serviço !</h6>
+<%-include('../../partials/UserLog/head')%> 
+  <!-- AQUI ENTRA O ESTILO PESSOAL -->
+  <link rel="stylesheet" type="text/css" href="/css/conteudoIndex.css">
+<% -include('../../partials/UserLog/head2') %> 
+<body class="text-center text-white bg-primary">
+  <div class="container p-3 mx-auto">
+    <%-include('../../partials/UserLog/nav') %> 
+    <%if(Object.values(servicos).length === 0){%>
+      <div class="alert alert-secondary alert-dismissible fade show text-center erroServico" role="alert">
+        <h4>
+          <b>Não</b> foram encontrados <b>serviços</b> para o seu <b>Grupo</b>.
+        </h4>  
+        <p>
+          <i class="bi bi-emoji-frown text-secondary iconeUsado"></i>
+        </p>
+        <p>
+          <a href="#">
+            Faça contado com o nosso suporte e verifique seus dados!
+          </a>
+        </p>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    <%}else{%>
+      <div class="tituloServicos">
+        <h3>
+          Lista de Serviços Disponíveis <i class="bi bi-bag"></i>
+        </h3>
+      </div>
+      <section class="card-list">
+        <%servicos.forEach(servico => {%>
+          <article class="card text-primary">
+            <header class="card-header">
+              <p>Serviço</p>
+              <h2><%=servico.nome%></h2>
+            </header>
+            <div class="card-author">
+              <a class="author-avatar" href="#">
+                <i class="bi bi-calculator" style="font-size: 2rem;"></i>
+              </a>
+    
+              <div class="author-name">
+                <div class="author-name-prefix">Prestado por:</div>
+                Agenda Contabilidade
+              </div>
             </div>
-            <hr>
-            <div class="card-body">
-                <h4 class="display-6">Lista de Serviços Disponíveis</h4>
-                <% if(Object.values(servicos).length===0){ %>
-                    <div class="alert alert-secondary alert-dismissible fade show text-center mt-5" role="alert">
-                        <h6 class="display-6">Não temos nenhum serviço disponível para sua categoria!</h6>
-                        <a href="#">
-                            <i class="bi bi-emoji-frown" style="font-size: 4rem; color: black;"></i>
-                        </a>
-                        <p>
-                            <a href="/user/index">Clique aqui para voltar ao menu principal!</a> 
-                        </p>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                <% }else { %>
-                    <% servicos.forEach(servico => { %>
-                        <div class="card-services mb-3 mt-3">
-                            <div class="row g-0">
-                              <div class="col-md-4">
-                                <img src="https://cdn.pixabay.com/photo/2021/10/11/13/12/website-6700615_960_720.png" class="img-fluid rounded-start" alt="...">
-                              </div>
-                              <div class="col-md-8">
-                                <div class="card-body-services">
-                                  <br>
-                                  <h3 class="card-title display-6 mr-5"><%=servico.nome%></h3>
-                                  <br>
-                                  <br>
-                                  <br>
-                                  <br>
-                                  <div class="button-card-service">
-                                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal<%=servico.id%>" data-bs-whatever="@fat">Solicitar</button>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                        </div>
-                        <!-- MODAL -->
-                        <div class="modal fade" id="exampleModal<%=servico.id%>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                          <div class="modal-dialog">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Dados para solicitação</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                              </div>
-                              <div class="modal-body">
-                                <form>
-                                  <div class="mb-3">
-                                    <label for="recipient-name" class="col-form-label">Destinatário:</label>
-                                    <input type="text" class="form-control" id="recipient-name" value="Agenda Contabilidade" disabled>
-                                  </div>
-                                  <div class="mb-3">
-                                    <label for="message-text" class="col-form-label">Descrição do Serviço:</label>
-                                    <textarea class="form-control" id="message-text" placeholder="Defina dados específicos para a solicitação do serviço" required></textarea>
-                                  </div>
-                                </div>
-                                <div class="modal-footer">
-                                  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
-                                  <button type="submit" class="btn btn-primary">Enviar Solicitação</button>
-                                </div>
-                            </form>
-                            </div>
-                          </div>
-                        </div>
-                    <% }); %> 
-                <% } %>
+            <div class="tags">
+              <a href="#" data-bs-toggle="modal" data-bs-target="#cadastraServico<%=servico.id%>">Solicitar</a>
             </div>
-        </div>
-    </div>
-</body>
-<%- include('../../partials/usuario/footer1') %> 
-<script src="/js/historicoServico.js"></script>
+          </article>
 
+          <!-- MODAL RESPONSÁVEL POR CADASTRAR UM SERVIÇO -->
+          <div class="modal fade" id="cadastraServico<%=servico.id%>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog  modal-lg">
+              <div class="modal-content">
+                <form action="/user/solicita/servico" method="post" onsubmit="confirmaServico();">
+                  <div class="modal-header">
+                    <h6 class="modal-title text-secondary display-6" id="exampleModalLabel"><i class="bi bi-bag-check"></i>  Solicitar Serviço: <%=servico.nome%></h6>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="row g-2">
+                      <div class="col-md">
+                        <div class="form-floating">
+                          <input type="text" value="agendacontabilidadectga@gmail.com" class="form-control" placeholder=" " disabled>
+                          <label class="text-dark dadosSolicitaServico">Destinatário</label>
+                        </div>
+                      </div>
+                      <div class="col-md">
+                        <div class="form-floating">
+                          <input type="text" value="<%=servico.nome%>" class="form-control" placeholder=" " disabled>
+                          <label class="text-dark dadosSolicitaServico">Assunto</label>
+                        </div>
+                      </div>
+                    </div>
+                    <br>
+                    <div class="observacaoServico">
+                      <label class="dadosSolicitaServico text-dark">Descrição da solicitação</label>
+                    </div>
+                    <textarea name="observacao" class="form-control" rows="3" required></textarea>
+                    <input type="hidden" value="<%=usuario.id%>" name="cliente">
+                    <input type="hidden" value="<%=servico.nome%>" name="nome">
+                  </div>
+                  <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Solicitar</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <!-- FIM MODAL RESPONSÁVEL POR CADASTRAR UM SERVIÇO -->
+        <%});%>
+      </section>
+    <%}%>
+  </div>
+  <script type="text/javascript">
+    var confirmaServico = () => {
+      alert("Serviço solicitado com sucesso !");
+    };
+  </script>
+</body>
+<%-include('../../partials/UserLog/footer.ejs')%>

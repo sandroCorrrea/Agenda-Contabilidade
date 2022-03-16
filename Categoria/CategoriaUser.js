@@ -8,6 +8,6 @@ const Categoria = connection.define('cliente_categoria', {
     },
 });
 
-//Categoria.sync({force: true});
+//Categoria.sync({force: false});
 
 module.exports = Categoria;
