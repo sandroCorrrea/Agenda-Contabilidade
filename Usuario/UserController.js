@@ -498,7 +498,17 @@ router.get('/user/dados/acesso', authUser, (req, res) => {
 });
 
 router.post('/user/solicita/servico' , authUser, (req, res) => {
-    var {nome, observacao, cliente, status} = req.body;
+    var {nome, observacao, cliente, status, dataCriacao} = req.body;
+
+    let dataCriacaoServico = agenda.TrataData(dataCriacao);
+    let nomeCliente        = req.session.usuario.nome;
+    
+    Cliente.findOne({
+        where: {cpf: req.session.usuario.cpf}
+    }).then(dadosUsuario => {
+        // ENVIO A SOLICITAÇÃO PARA O EMAIL DA AGENDA
+        email.EnviaEmailConfirmacaoChamado(enderecoAgenda, nomeCliente, nome, observacao, dadosUsuario.email, dataCriacaoServico);
+    });
     
     user.InserirServicoParaCliente(res, SolicitaServico, nome, observacao, cliente, status);
     user.InserirServicoParaCliente(res, ServicoAux, nome, observacao, cliente, status);

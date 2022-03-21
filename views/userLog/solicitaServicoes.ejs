@@ -79,6 +79,8 @@
                     <textarea name="observacao" class="form-control" rows="3" required></textarea>
                     <input type="hidden" value="<%=usuario.id%>" name="cliente">
                     <input type="hidden" value="<%=servico.nome%>" name="nome">
+                    <input type="hidden" value="<%=servico.id%>" name="numeroProtocolo">
+                    <input type="hidden" value="<%=servico.createdAt%>" name="dataCriacao">
                     <input type="hidden" value="Em processo" name="status">
                   </div>
                   <div class="modal-footer">

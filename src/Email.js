@@ -151,6 +151,39 @@ class Email{
             }
         });
     }
+
+    EnviaEmailConfirmacaoChamado(destinatario, nomeCliente, nomeServico, descricaoServico, emailCliente, dataCriacao){
+
+        ejs.renderFile('views/usuario/email/enviaChamado.ejs', {name: 'Email', nome: nomeCliente, nomeServico: nomeServico, descricaoServico: descricaoServico, emailCliente: emailCliente, dataCriacao: dataCriacao}, function(err, data){
+            if (err) {
+                console.log(err);
+            } else {
+                let transporter = nodemailer.createTransport({
+                    host: "smtp.gmail.com",
+                    port: 587,
+                    secure: false,
+                    auth:{
+                        user: emailAgenda,
+                        pass: "Scrj311001"
+                    }
+                });
+    
+                var mainOptions = {
+                    from: nomeEmpresa,
+                    to: destinatario,
+                    subject: nomeCliente + " Solicitou um serviço!",
+                    html: data
+                };
+                transporter.sendMail(mainOptions, function (err, info) {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        console.log('Message sent: ' + info.response);
+                    }
+                });
+            }
+        });
+    }
 }
 
 module.exports = Email;
