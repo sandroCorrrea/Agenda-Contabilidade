@@ -15,6 +15,7 @@ const EmailInteresse = require('./Emails');
 const authUser = require('../middlewares/userAuth');
 const authAdmin = require('../middlewares/adminAuth');
 const SolicitaServico = require('./SolicitaServico');
+const ServicoAux = require('./SolicitarServicoAux');
 
 // INSTÂNCIAS USADAS
 const agenda = new Agenda();
@@ -390,11 +391,45 @@ router.get('/user/solicitar/servico', authUser, (req, res) => {
     });
 });
 
-router.get('/user/solicitacoes', authUser, (req, res) => {
+router.get('/user/solicitacoes/:num', authUser, (req, res) => {
     var nomeUser = req.session.usuario.nome;
 
-    res.render('userLog/solicitacoes', {
-        nome: nomeUser.split(" ")
+    var page = req.params.num;
+    var offset = 0;
+
+    if(isNaN(page) || page == 1){
+        offset = 0;
+    }else{
+        offset = (parseInt(page) - 1)* 4;
+    }
+
+    SolicitaServico.findAndCountAll({
+        where:{clienteId : req.session.usuario.id},
+        limit: 4,
+        offset: offset,
+        order:[['id', 'DESC']]
+    }).then(historicos => {
+        var next;
+
+        if(offset + 4 >= historicos.count){
+            next = false;
+        }else{
+            next = true;
+        }
+
+        var result = {
+            next: next,
+            page: parseInt(page),
+            historicos: historicos,
+            agenda: agenda
+        };
+
+        res.render('userLog/solicitacoes', {
+            result: result,
+            nome: nomeUser.split(" ")
+        });
+    }).catch(erro => {
+        console.log(erro);
     });
 });
 
@@ -463,9 +498,10 @@ router.get('/user/dados/acesso', authUser, (req, res) => {
 });
 
 router.post('/user/solicita/servico' , authUser, (req, res) => {
-    var {nome, observacao, cliente} = req.body;
-
-    user.InserirServicoParaCliente(res, SolicitaServico, nome, observacao, cliente);
+    var {nome, observacao, cliente, status} = req.body;
+    
+    user.InserirServicoParaCliente(res, SolicitaServico, nome, observacao, cliente, status);
+    user.InserirServicoParaCliente(res, ServicoAux, nome, observacao, cliente, status);
 });
 
 module.exports = router;

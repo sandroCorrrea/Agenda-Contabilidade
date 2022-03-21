@@ -7,9 +7,9 @@
     <%-include('../../partials/UserLog/nav') %> 
     <%if(Object.values(servicos).length === 0){%>
       <div class="alert alert-secondary alert-dismissible fade show text-center erroServico" role="alert">
-        <h4>
+        <h6 class="display-6">
           <b>Não</b> foram encontrados <b>serviços</b> para o seu <b>Grupo</b>.
-        </h4>  
+        </h6>  
         <p>
           <i class="bi bi-emoji-frown text-secondary iconeUsado"></i>
         </p>
@@ -79,6 +79,7 @@
                     <textarea name="observacao" class="form-control" rows="3" required></textarea>
                     <input type="hidden" value="<%=usuario.id%>" name="cliente">
                     <input type="hidden" value="<%=servico.nome%>" name="nome">
+                    <input type="hidden" value="Em processo" name="status">
                   </div>
                   <div class="modal-footer">
                     <button type="submit" class="btn btn-primary">Solicitar</button>

@@ -69,14 +69,15 @@ class Cliente extends Agenda{
         }
     }
 
-    InserirServicoParaCliente(res, modal, nome, observacao, cliente){
+    InserirServicoParaCliente(res, modal, nome, observacao, cliente, statusServico){
         
         modal.create({
             assunto  : nome,
             descricao: observacao,
             clienteId: cliente,
+            status   : statusServico
         }).then(() => {
-            res.redirect('/user/solicitar/servico');
+            res.redirect('/user/solicitacoes/1');
         }).catch(erro => {
             console.log(erro);
         });

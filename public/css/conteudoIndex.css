@@ -149,3 +149,18 @@
 .observacaoServico{
     text-align: left;
 }
+tr {
+    width: 100%;
+    display: inline-table;
+    table-layout: fixed;
+}
+table{
+    height:420px;              
+    display: -moz-groupbox;    
+}
+tbody{
+  overflow-y: scroll;      
+  height: 360px;           
+  width: 80%;
+  position: absolute;
+}

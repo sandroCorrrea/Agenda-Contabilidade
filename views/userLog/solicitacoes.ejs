@@ -1,20 +1,116 @@
-<%- include('../../partials/usuario/head') %> 
-  <title>Agenda Contabilidade</title>
-  <link rel="stylesheet" type="text/css" href="/css/historicoServicos.css">
-<%- include('../../partials/usuario/head2') %> 
-<body>
-  <%- include('../../partials/UserLog/nav') %> 
-    <div class="container">
-        <div class="card">
-            <div class="card-header">
-              <h6 class="display-5 text-center">Histórico de Serviços</h6>
+<%-include('../../partials/UserLog/head')%> 
+  <!-- AQUI ENTRA O ESTILO PESSOAL -->
+  <link rel="stylesheet" type="text/css" href="/css/historico.css">
+<% -include('../../partials/UserLog/head2') %> 
+<body class="text-center text-white bg-primary">
+  <div class="container p-3 mx-auto">
+    <%-include('../../partials/UserLog/nav') %> 
+    <%if(Object.values(result.historicos.rows).length === 0){%>
+      <div class="alert alert-secondary alert-dismissible fade show text-center erroServico alertaServicoIndisponivel" role="alert">
+        <h6 class="display-6">
+          <b>Não</b> encontramos <b>solicitações</b> de <b>serviço</b>.
+        </h6>  
+        <p>
+          <i class="bi bi-emoji-frown text-secondary iconeUsado"></i>
+        </p>
+        <p>
+          <a href="/user/solicitar/servico">
+            Clique aqui e solicite agora o seu serviço!
+          </a>
+        </p>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    <%}else{%>
+      <div class="tituloServicos">
+        <h3>
+          Histórico de solicitações <i class="bi bi-archive"></i>
+        </h3>
+      </div>
+      <div class="mt-3">
+        <%result.historicos.rows.forEach(historico => { %>
+          <div class="card">
+            <div class="card-header text-secondary">
+              <h4>
+                <b><%=historico.assunto%></b>
+              </h4>
             </div>
-            <hr>
             <div class="card-body">
-              
+              <p><i class="bi bi-briefcase text-primary icone-usado"></i></p>
             </div>
-        </div>
-    </div>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exibeDetalhesSolicitacoes<%=historico.id%>">Detalhes</button>
+          </div>
+
+          <!-- Modal para exibir dados do serviço -->
+          <div class="modal fade" id="exibeDetalhesSolicitacoes<%=historico.id%>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h6 class="modal-title text-primary display-6" id="exampleModalLabel">Serviço: <%=historico.assunto%></h6>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <div class="row g-2">
+                    <div class="col-md">
+                      <div class="form-floating">
+                        <input type="email" class="form-control" id="floatingInputGrid" placeholder="name@example.com" value="Agenda Contabilidade" disabled>
+                        <label class="text-dark">Enviado para</label>
+                      </div>
+                    </div>
+                    <div class="col-md">
+                      <div class="form-floating">
+                        <input type="email" class="form-control" id="floatingInputGrid" placeholder="name@example.com" value="<%=result.agenda.TrataData(historico.createdAt)%>" disabled>
+                        <label class="text-dark">Data da solitação</label>
+                      </div>
+                    </div>
+                  </div>
+                  <br>
+                  <div class="row g-2">
+                    <div class="col-md">
+                      <div class="form-floating">
+                        <input type="email" class="form-control" id="floatingInputGrid" placeholder="name@example.com" value="<%=historico.id%>" disabled>
+                        <label class="text-dark">Nº Protocolo</label>
+                      </div>
+                    </div>
+                    <div class="col-md">
+                      <div class="form-floating">
+                        <%if(historico.status == "Em processo"){%>
+                          <input type="email" class="form-control text-danger" id="floatingInputGrid" placeholder="name@example.com" value="<%=historico.status%>" disabled>
+                        <%}%>
+                        <label class="text-dark">Status</label>
+                      </div>
+                    </div>
+                  </div>
+                  <br>
+                  <div class="form-floating">
+                    <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea" rows="3" disabled><%=historico.descricao%></textarea>
+                    <label for="floatingTextarea" class="text-dark">
+                      Descrição:
+                    </label>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        <%})%>
+      </div>
+      <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center pagination-lg"> 
+  
+          <%if(result.page > 2){ %>
+            <li class="page-item"><a class="page-link" href="/user/solicitacoes/<%=result.page - 1%>">Anterior</a></li>
+          <%}else if(result.page == 2){%>
+            <li class="page-item"><a class="page-link" href="/user/solicitacoes/1">Anterior</a></li>
+          <%}%>
+  
+          <%if(result.next){%>
+            <li class="page-item"><a class="page-link" href="/user/solicitacoes/<%=result.page + 1%>">Próximo</a></li>
+          <%}%>
+        </ul>
+      </nav>
+    <%}%>
+  </div>
 </body>
-<%- include('../../partials/usuario/footer1') %> 
-<script src="/js/cadastroCliente.js"></script>
+<%-include('../../partials/UserLog/footer.ejs')%>

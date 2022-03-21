@@ -1,0 +1,50 @@
+.tituloServicos{
+    margin-top: 8%;
+    text-align: left;
+    cursor: pointer;
+}
+.tituloServicos:hover{
+    color: black;
+    cursor: pointer;
+}
+
+.card{
+    background-color: whitesmoke;
+    display: inline-block;
+    width: 35%;
+    height: 250px;
+    margin: 15px;
+    transition: all .5s;
+    border: 10px solid transparent;
+    border: none;
+}
+.card-header{
+    width: 100%;
+    padding: 5%;
+    height: 70px;
+    background: none;
+    border: none;
+    /* border: 1px solid black; */
+}
+.card-body{
+    width: 100%;
+    height: 120px;
+    /* border: 1px solid blueviolet; */
+}
+.card:hover{
+    /* border: 10px solid #136497; */
+    border-radius: 20%;
+    background-color: #76bfff;
+}
+.icone-usado{
+    font-size: 5rem;
+}
+label{
+    font-size: 18px;
+}
+.alertaServicoIndisponivel{
+    margin-top: 30vh;
+}
+.iconeUsado{
+    font-size: 2rem;
+}
