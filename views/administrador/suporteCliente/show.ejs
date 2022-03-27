@@ -1,5 +1,5 @@
 <%- include('../../../partials/Administrador/head.ejs') %> 
-<link rel="stylesheet" type="text/css" href="/css/servicos.css">
+<link rel="stylesheet" type="text/css" href="/css/suporteClienteAdmin.css">
 <%- include('../../../partials/Administrador/head2.ejs') %> 
 <body>
     <%- include('../../../partials/Administrador/nav.ejs') %>
@@ -29,83 +29,94 @@
                 </div>
             </div>
             <div class="card-body">
-                <% if(Object.values(suportes).length === 0){%>
-                    <div class="alert alert-secondary alert-dismissible fade show text-center" role="alert">
-                        <h6 class="display-6">Não Existem Pedidos de Ajuda!</h6>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                <%}else{ %>
-                    <table class="table">
-                        <thead>
-                          <tr>
-                            <th>Nº Protocolo</th>
-                            <th>Cliente</th>
-                            <th>Email</th>
-                            <th>Celular</th>
-                            <th>Telefone</th>
-                            <th>Ação</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                            <% suportes.forEach(suporte => { %>
-                                <tr>
-                                  <th><%=suporte.id%> </th>
-                                  <th><%=suporte.primeiroNome%></th>
-                                  <th><%=suporte.email%></th>
-                                  <th><%=suporte.celular%></th>
-                                  <th><%=suporte.telefone%></th>
-                                  <th>
-                                      <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal<%=suporte.id%>">
-                                          Responder
-                                      </button>
-                                  </th>
-                                </tr>
-                                <!-- MODAL COM INFORMAÇÕES ADICIONAIS -->
-                                <div class="modal fade" id="exampleModal<%=suporte.id%>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-lg">
-                                      <div class="modal-content">
-                                        <div class="modal-header">
-                                          <h5 class="modal-title" id="exampleModalLabel">Mensagem Enviada Para: <b class="text-primary"><%=suporte.email%></b></h5>
-                                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                          <form method="post" action="/admin/suporte/cliente" onsubmit="confirmResposta()">
-                                            <input type="hidden" name="primeiroNome" value="<%=suporte.primeiroNome%>">
-                                            <input type="hidden" name="emailDestinatario" value="<%=suporte.email%>">
-                                            <input type="hidden" name="pergunta" value="<%=suporte.descricao%>">
-                                            <%if(suporte.descricao.length <= 50){%>
-                                              <div class="mb-3 perguntaCliente">
-                                                <label for="recipient-name" class="col-form-label text-primary"><i class="bi bi-person iconesUsadosChat"></i><%=suporte.primeiroNome + "  "%>Perguntou:</label>
-                                                <textarea class="form-control" id="message-text" rows="1" disabled><%=suporte.descricao%></textarea>
-                                              </div>
-                                            <%}else if(suporte.descricao.length > 50 && suporte.descricao.length <= 150){%>
-                                              <div class="mb-3 perguntaCliente">
-                                                <label for="recipient-name" class="col-form-label text-primary"><i class="bi bi-person iconesUsadosChat"></i><%=suporte.primeiroNome + "  "%>Perguntou:</label>
-                                                <textarea class="form-control" id="message-text" rows="2" disabled><%=suporte.descricao%></textarea>
-                                              </div>
-                                            <%}else{%>
-                                              <div class="mb-3 perguntaCliente">
-                                                <label for="recipient-name" class="col-form-label text-primary"><i class="bi bi-person iconesUsadosChat"></i><%=suporte.primeiroNome + "  "%>Perguntou:</label>
-                                                <textarea class="form-control" id="message-text" rows="3" disabled><%=suporte.descricao%></textarea>
-                                              </div>
-                                            <%}%>
-                                            <div class="mb-3">
-                                              <label for="message-text" class="col-form-label">Resposta:</label>
-                                              <textarea class="form-control" id="message-text" rows="4" name="resposta" required></textarea>
-                                            </div>
-                                            <button class="btn btn-success" name="id" value="<%=suporte.id%>">Responder</button>
-                                          </form>
-                                        </div>
-                                        <div class="modal-footer">
-                                          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
-                                        </div>
-                                      </div>
+              <% if(Object.values(suportes).length === 0){%>
+                  <div class="alert alert-secondary alert-dismissible fade show text-center" role="alert">
+                      <h6 class="display-6">Não Existem Pedidos de Ajuda!</h6>
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+              <%}else{ %>
+                <table class="table table-striped">
+                  <thead class="text-primary text-center">
+                    <tr>
+                      <th>Nº Protocolo</th>
+                      <th>Cliente</th>
+                      <th>Email</th>
+                      <th>Celular</th>
+                      <th>Telefone</th>
+                      <th>Data</th>
+                      <th>Ação</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <%suportes.forEach(suporte => {%>
+                      <tr class="corpoTabela">
+                        <th class="text-center"><%=suporte.id%></th>
+                        <th><%=suporte.primeiroNome%></th>
+                        <th><%=suporte.email%></th>
+                        <th><%=suporte.celular%></th>
+                        <th><%=suporte.telefone%></th>
+                        <th><%=agenda.TrataData(suporte.createdAt)%></th>
+                        <th>
+                          <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#listaChatCliente<%=suporte.id%>">
+                            Detalhes
+                            <span class="badge bg-success">Respondido</span>
+                          </button>
+                        </th>
+                      </tr>
+                      <!-- Modal Para exibir conversa -->
+                      <div class="modal fade" id="listaChatCliente<%=suporte.id%>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                          <div class="modal-content">
+                            <form action="/admin/suporte/cliente" method="post" onsubmit="confirmResposta()">
+                              <div class="modal-header">
+                                <h4 class="modal-title" id="exampleModalLabel">Mensagem encaminhada para <b class="text-primary"><%=suporte.email%></b></h4>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                              </div>
+                              <div class="modal-body">
+                                <% respostas.forEach(resposta => {%>
+                                  <%if(resposta.id == suporte.id){%>
+                                    <label class="text-primary"><i class="bi bi-people"></i>  <%=suporte.primeiroNome%> Perguntou: </label>
+                                    <%if(resposta.descricao.length < 50){%>
+                                      <textarea rows="1" class="form-control perguntasUser" disabled><%=resposta.descricao%></textarea>
+                                    <%}else if(resposta.descricao.length >= 50 && resposta.descricao.length < 150){%>
+                                      <textarea rows="2" class="form-control perguntasUser" disabled><%=resposta.descricao%></textarea>
+                                    <%}else{%>
+                                      <textarea rows="3" class="form-control perguntasUser" disabled><%=resposta.descricao%></textarea>
+                                    <%}%>
+                                    <%if(resposta.resposta != null){%>
+                                      <label class="text-success labelResposta"><i class="bi bi-person"></i>  Admin Respondeu</label>
+                                      <%if(resposta.resposta.length < 50){%>
+                                        <textarea rows="1" class="form-control respostaUser" disabled><%=resposta.resposta%></textarea>
+                                      <%}else if(resposta.resposta.length >= 50 && resposta.resposta.length < 150){%>
+                                        <textarea rows="2" class="form-control respostaUser" disabled><%=resposta.resposta%></textarea>
+                                      <%}else{%>
+                                        <textarea rows="3" class="form-control respostaUser" disabled><%=resposta.resposta%></textarea>
+                                      <%}%>
+                                    <%}else{%>
+                                      <label class="mt-5">Responda: </label>
+                                      <textarea class="form-control" name="resposta" required></textarea>
+                                      <input type="hidden" name="emailDestinatario" value="<%=suporte.email%>">
+                                      <input type="hidden" name="primeiroNome" value="<%=suporte.primeiroNome%>">
+                                      <input type="hidden" name="pergunta" value="<%=resposta.descricao%>">
+                                    <%}%>
+
+                                    <div class="modal-footer mt-4">
+                                      <% if(resposta.resposta == null){%>
+                                        <button type="submit" class="btn btn-primary" value="<%=suporte.id%>" name="id">Responder</button>
+                                      <%}%>
+                                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
                                     </div>
-                                </div>
-                            <% }); %> 
-                        </tbody>
-                    </table>
-                <% }%>
+                                  <%}%>
+                                <%});%> 
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                    <%});%>
+                  </tbody>      
+                </table>
+              <% }%>
             </div>
         </div>
     </div>

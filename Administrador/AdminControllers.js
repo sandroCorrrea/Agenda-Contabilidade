@@ -20,7 +20,6 @@ var suporte = new SuporteClass();
 var email = new EmailSuporte();
 
 // ---------- CONFIGURANDO UPLOAD DE IMAGENS
-
 const storage = multer.diskStorage({
     destination: function(req, file, cb) {
         cb(null, "public/img/admin", )
@@ -135,17 +134,39 @@ router.post('/admin/delete/cliente', authAdmin, (req, res) => {
 });
 
 router.get('/admin/suporte/cliente', authAdmin, (req, res) => {
-    RespSuporte.findAll().then(respostas => {
-        Suporte.findAll({
-            order: [
-                ['id', 'DESC']
-            ]
-        }).then(suportes => {
-            res.render('administrador/suporteCliente/show', {
-                suportes: suportes,
-                respostas: respostas
-            }).catch(erro => {
+
+    const connectionDatabase = suporte.conectaBanco();
+
+    connectionDatabase.connect(erro => {
+        if(erro){
+            console.log(erro);
+        }
+
+        const sql = 'SELECT * FROM suporte_clientes ORDER BY id DESC';
+
+        const sqlChat =`SELECT 
+                            rau.resposta, 
+                            sc.descricao,
+                            sc.id
+                        FROM 
+                            suporte_clientes AS sc 
+                        LEFT JOIN 
+                            resposta_ajuda_users AS rau ON rau.suporteClienteId = sc.id
+        `;
+        
+        connectionDatabase.query(sql, (erro, suportes) => {
+            if(erro){
                 console.log(erro);
+            }
+            connectionDatabase.query(sqlChat, (erro, respostas) => {
+                if(erro){
+                    console.log(erro);
+                }
+                res.render('administrador/suporteCliente/show', {
+                    suportes: suportes,
+                    agenda: agenda,
+                    respostas: respostas,
+                });
             });
         });
     });

@@ -1,0 +1,21 @@
+.card, .card-header, .card-body{
+    background: none;
+    border: none;
+}
+.perguntasUser{
+    width: 55%;
+}
+.respostaUser{
+    width: 60%;
+    margin-left: 39%;
+    margin-bottom: 10vh;
+}
+.labelResposta{
+    margin-left: 74%;
+}
+textarea{
+    resize: none;
+}
+label{
+    font-size: 18px;
+}

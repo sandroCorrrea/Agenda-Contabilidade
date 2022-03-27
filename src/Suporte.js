@@ -1,3 +1,4 @@
+const mysql = require('mysql');
 class Suporte{
 
     constructor(){
@@ -39,6 +40,17 @@ class Suporte{
         }).catch(erro => {
             console.log(erro);
         });
+    }
+
+    conectaBanco(){
+        const connectionDatabase = mysql.createConnection({
+            host: 'localhost',
+            user: 'root',
+            password: '',
+            database: 'agenda'
+        });
+
+        return connectionDatabase;
     }
 }
 
