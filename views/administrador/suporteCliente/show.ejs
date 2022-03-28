@@ -59,7 +59,11 @@
                         <th>
                           <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#listaChatCliente<%=suporte.id%>">
                             Detalhes
-                            <span class="badge bg-success">Respondido</span>
+                            <%if(suporte.resposta == null){%>
+                              <span class="badge bg-danger">Em aberto</span>
+                            <%}else{%>
+                              <span class="badge bg-success">Respondido</span>
+                            <%}%>
                           </button>
                         </th>
                       </tr>

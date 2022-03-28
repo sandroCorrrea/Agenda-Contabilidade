@@ -142,7 +142,21 @@ router.get('/admin/suporte/cliente', authAdmin, (req, res) => {
             console.log(erro);
         }
 
-        const sql = 'SELECT * FROM suporte_clientes ORDER BY id DESC';
+        const sql =`SELECT 
+                        sc.id, 
+                        sc.primeiroNome,
+                        sc.email,
+                        sc.celular,
+                        sc.telefone,
+                        sc.createdAt,
+                        rau.resposta
+                    FROM 
+                        suporte_clientes AS sc 
+                    LEFT JOIN 
+                        resposta_ajuda_users AS rau ON rau.suporteClienteId = sc.id
+                    ORDER BY 
+                        sc.id DESC
+        `;
 
         const sqlChat =`SELECT 
                             rau.resposta, 
