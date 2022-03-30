@@ -124,13 +124,25 @@
       <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#account-collapse" aria-expanded="false">
         <i class="bi bi-person-bounding-box" style="font-size: 1.5rem;"></i>
         <div class="itens-sidebar">
-          Administrador
+          <%=nomeAdministrador%>
         </div>
       </button>
       <div class="collapse" id="account-collapse">
         <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-          <li><a href="#" class="link-dark rounded"><i class="bi bi-eye"></i>Informações</a></li>
-          <li><a href="/admin/userAdmin/logout" class="link-dark rounded"><i class="bi bi-box-arrow-left"></i>Sair</a></li>
+          <li>
+            <a href="#" class="link-dark rounded"><i class="bi bi-eye"></i>
+              <div class="itens-sidebar">
+                Informações
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="/admin/userAdmin/logout" class="link-dark rounded"><i class="bi bi-box-arrow-left"></i>
+              <div class="itens-sidebar">
+                Sair
+              </div>
+            </a>
+          </li>
         </ul>
       </div>
     </li>

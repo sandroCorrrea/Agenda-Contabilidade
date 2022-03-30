@@ -42,11 +42,12 @@ class Postagem extends Agenda{
         }
     }
 
-    CriaArquivoParaEdicao(id, res, modal){
+    CriaArquivoParaEdicao(id, res, modal, req){
         modal.findByPk(id).then(posts => {
             if (posts != undefined) {
                 res.render('administrador/postagens/edit', {
-                    posts: posts
+                    posts: posts,
+                    nomeAdministrador: req.session.admins.nome,
                 });
             }else{
                 res.redirect('/admin/postagens');

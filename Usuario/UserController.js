@@ -289,7 +289,8 @@ router.get('/admin/clientes', authAdmin, (req, res) => {
                             administradores: administradores,
                             agenda: agenda,
                             categorias: categorias,
-                            senhaError: senhaError
+                            senhaError: senhaError,
+                            nomeAdministrador: req.session.admins.nome,
                         });
                     } else {
                         res.redirect('/admin/clientes');

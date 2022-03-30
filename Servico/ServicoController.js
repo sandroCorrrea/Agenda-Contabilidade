@@ -16,7 +16,8 @@ router.get('/admin/service', authAdmin, (req, res) => {
         CategoriaUser.findAll().then(categoriaUser => {
             res.render('administrador/services/new', {
                 categorias: categorias,
-                categoriaUser: categoriaUser
+                categoriaUser: categoriaUser,
+                nomeAdministrador: req.session.admins.nome,
             });
         });
     });
@@ -41,6 +42,7 @@ router.get('/admin/services', authAdmin, (req, res) => {
         res.render('administrador/services/show', {
             servicos: servicos,
             agenda: agenda,
+            nomeAdministrador: req.session.admins.nome,
         })
     }).catch(erro => {
         console.log(erro);
@@ -56,7 +58,7 @@ router.post('/admin/service/excluir', authAdmin, (req, res) => {
 router.get('/admin/service/edita/:id', authAdmin, (req, res) => {
     var { id } = req.params;
 
-    servico.CriaArquivoParaEdicao(res, ServicoModal, id);
+    servico.CriaArquivoParaEdicao(res, ServicoModal, id, req);
 });
 
 router.post('/admin/servico/edita', authAdmin, (req, res) => {

@@ -32,13 +32,14 @@ class CategoriaAgenda{
         }
     }
 
-    CriaArquivoParaEdicao(res, id, categorias, modal){
+    CriaArquivoParaEdicao(res, id, categorias, modal, req){
         if(id != undefined){
             if (!isNaN(id)) {
                 modal.findByPk(id).then(categorias => {
                     if (categorias != undefined) {
                         res.render('administrador/categorias/edit', {
                             categorias: categorias,
+                            nomeAdministrador: req.session.admins.nome,
                         })
                     }else{
                         res.redirect("/admin/categorias");
@@ -65,13 +66,14 @@ class CategoriaAgenda{
     }
 
     //------------------------------------------- EDIÇÃO DE DADOS DA CATEGORIAS DE CLIENTE
-    CriaArquivoParaEdicaoCliente(res, id, categorias, modal){
+    CriaArquivoParaEdicaoCliente(res, id, categorias, modal, req){
         if(id != undefined){
             if (!isNaN(id)) {
                 modal.findByPk(id).then(categorias => {
                     if (categorias != undefined) {
                         res.render('administrador/categorias/editCliente', {
                             categorias: categorias,
+                            nomeAdministrador: req.session.admins.nome,
                         })
                     }else{
                         res.redirect("/admin/categorias");

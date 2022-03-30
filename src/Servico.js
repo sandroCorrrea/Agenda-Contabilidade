@@ -40,7 +40,7 @@ class Servico{
         }
     }
 
-    CriaArquivoParaEdicao(res, modal, id){
+    CriaArquivoParaEdicao(res, modal, id, req){
         if(!isNaN(id)){
             modal.findByPk(id).then(servicos => {
                 if(servicos != undefined){
@@ -49,7 +49,8 @@ class Servico{
                             res.render('administrador/services/edit', {
                                 servicos      : servicos,
                                 categorias    : categorias,
-                                categoriasUser: categoriasUser
+                                categoriasUser: categoriasUser,
+                                nomeAdministrador: req.session.admins.nome,
                             });
                         });
                     });

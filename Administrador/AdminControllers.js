@@ -34,7 +34,9 @@ const upload = multer({ storage });
 // --------------- FIM DAS CONFIGURAÇÕES
 
 router.get('/admin/new', authAdmin, (req, res) => {
-    res.render('administrador/admin/new');
+    res.render('administrador/admin/new', {
+        nomeAdministrador: req.session.admins.nome,
+    });
 });
 
 router.post('/admin/new', authAdmin, upload.single("adminPerfil"), (req, res) => {
@@ -52,6 +54,7 @@ router.get('/admin/administradores', authAdmin, (req, res) => {
         res.render('administrador/admin/show', {
             administradores: administradores,
             agenda: agenda,
+            nomeAdministrador: req.session.admins.nome,
         });
     }).catch(erro => {
         console.log(erro);
@@ -68,7 +71,7 @@ router.get('/admin/editar/:id', authAdmin, (req, res) => {
 
     var { id } = req.params;
 
-    administrador.CriaArquivoEdicao(id, res, Admin);
+    administrador.CriaArquivoEdicao(id, res, Admin, req);
 });
 
 router.post('/admin/edit', authAdmin, upload.single("adminPerfil"), (req, res) => {
@@ -180,6 +183,7 @@ router.get('/admin/suporte/cliente', authAdmin, (req, res) => {
                     suportes: suportes,
                     agenda: agenda,
                     respostas: respostas,
+                    nomeAdministrador: req.session.admins.nome,
                 });
             });
         });

@@ -11,7 +11,9 @@ const categoria = new CategoriaAgenda();
 const agenda = new Agenda();
 
 router.get('/admin/categoria', authAdmin, (req, res) => {
-    res.render('administrador/categorias/new');
+    res.render('administrador/categorias/new', {
+        nomeAdministrador: req.session.admins.nome,
+    });
 });
 
 router.post('/admin/categoria', authAdmin, (req, res) => {
@@ -21,7 +23,9 @@ router.post('/admin/categoria', authAdmin, (req, res) => {
 });
 
 router.get('/admin/categorias', authAdmin, (req, res) => {
-    res.render('administrador/categorias/show');
+    res.render('administrador/categorias/show', {
+        nomeAdministrador: req.session.admins.nome,
+    });
 });
 
 router.post('/admin/categoria/excluir', authAdmin, (req, res) => {
@@ -33,7 +37,7 @@ router.post('/admin/categoria/excluir', authAdmin, (req, res) => {
 router.get('/admin/categoria/:id', authAdmin, (req, res) => {
     var { id } = req.params;
     // CRIA UM ARQUIVO PARA A EDIÇÃO DO DOCUMENTO
-    categoria.CriaArquivoParaEdicao(res, id, "categorias", Categoria);
+    categoria.CriaArquivoParaEdicao(res, id, "categorias", Categoria, req);
 });
 
 router.post('/admin/categoria/edit', authAdmin, (req, res) => {
@@ -44,11 +48,15 @@ router.post('/admin/categoria/edit', authAdmin, (req, res) => {
 
 // REQUISIÇÕES VIA AJAX
 router.get('/admin/categoriaServico', authAdmin, (req, res) => {
-    res.render('administrador/categorias/categoriaServico');
+    res.render('administrador/categorias/categoriaServico', {
+        nomeAdministrador: req.session.admins.nome,
+    });
 });
 
 router.get('/admin/categoriaUsuario', authAdmin, (req, res) => {
-    res.render('administrador/categorias/categoriaUsuario');
+    res.render('administrador/categorias/categoriaUsuario', {
+        nomeAdministrador: req.session.admins.nome,
+    });
 });
 
 router.get('/admin/categoriasUsuario', authAdmin, (req, res) => {
@@ -60,6 +68,7 @@ router.get('/admin/categoriasUsuario', authAdmin, (req, res) => {
         res.render('administrador/categorias/todasCategoriasUsuario', {
             categorias: categorias,
             agenda: agenda,
+            nomeAdministrador: req.session.admins.nome,
         });
     }).catch(erro => [
         console.log(erro)
@@ -75,6 +84,7 @@ router.get('/admin/categoriasServico', authAdmin, (req, res) => {
         res.render('administrador/categorias/todasCategoriasServico', {
             categorias: categorias,
             agenda: agenda,
+            nomeAdministrador: req.session.admins.nome,
         });
     }).catch(erro => [
         console.log(erro)
@@ -97,7 +107,7 @@ router.post('/admin/categoria/cliente/excluir', authAdmin, (req, res) => {
 router.get('/admin/categoria/cliente/:id', authAdmin, (req, res) => {
     var { id } = req.params;
     // CRIA UM ARQUIVO PARA A EDIÇÃO DO DOCUMENTO
-    categoria.CriaArquivoParaEdicaoCliente(res, id, "categorias", CategoriaUser);
+    categoria.CriaArquivoParaEdicaoCliente(res, id, "categorias", CategoriaUser, req);
 });
 
 router.post('/admin/categoria/edit/cliente', authAdmin, (req, res) => {

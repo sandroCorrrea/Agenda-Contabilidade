@@ -59,7 +59,7 @@ class Administrador extends Agenda{
         }
     }
 
-    CriaArquivoEdicao(id, res, modal){
+    CriaArquivoEdicao(id, res, modal, req){
         if(isNaN(id)){
             res.redirect('/admin/administradores');
         }else{
@@ -69,6 +69,7 @@ class Administrador extends Agenda{
                 if (admins != undefined){
                     res.render('administrador/admin/edit', {
                         admins: admins,
+                        nomeAdministrador: req.session.admins.nome,
                     })
                 }else{
                     res.redirect('/admin/administradores');
