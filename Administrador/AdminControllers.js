@@ -67,11 +67,9 @@ router.post('/admin/excluir', authAdmin, (req, res) => {
     administrador.ExcluirAdmin(id, Admin, res);
 });
 
-router.get('/admin/editar/:id', authAdmin, (req, res) => {
+router.get('/admin/editar', authAdmin, (req, res) => {
 
-    var { id } = req.params;
-
-    administrador.CriaArquivoEdicao(id, res, Admin, req);
+    administrador.CriaArquivoEdicao(res, Admin, req);
 });
 
 router.post('/admin/edit', authAdmin, upload.single("adminPerfil"), (req, res) => {

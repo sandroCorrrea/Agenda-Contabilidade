@@ -1,21 +1,3 @@
-'use strict'
-
-let photo = document.getElementById('imgPhoto');
-let file  = document.getElementById('imgUpload');
-
-photo.addEventListener('click', () => {
-    file.click();
-});
-
-file.addEventListener('change', (event) => {
-  let reader = new FileReader();
-  reader.onload = () => {
-    photo.src = reader.result;
-  }
-
-  reader.readAsDataURL(file.files[0]);
-});
-
 // ADICIONANDO MASCARA AOS CAMPOS COM JQUERY
 $(document).ready(() => {
   $('#cpf').mask('000.000.000-00');

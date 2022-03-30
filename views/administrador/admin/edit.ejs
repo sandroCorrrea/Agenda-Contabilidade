@@ -7,23 +7,14 @@
             <div class="container">
                 <button class="openbtn mt-3" onclick="openNav()">&#9776; Menu</button>
                 <div class="card-header">
-                    <h6 class="display-4 text-center fw-bold">Atualizar Administrador</h6>
-                    <a href="/admin/administradores" class="btn btn-primary linkVoltar"><i class="bi bi-arrow-left"></i>
-                        <div class="itens-sidebar">
-                            Voltar
-                        </div>
-                    </a>
+                    <h6 class="display-4 text-center fw-bold">Atualizar minhas informações</h6>
                 </div>
                 <div class="body">
                     <form action="/admin/edit" method="post" id="cadastroAdmin" enctype="multipart/form-data">
                         <div class="containerImg">
                             <div class="max-width">
                                 <div class="imageContainer">
-                                    <% if(admins.foto != false){ %>
-                                        <img src="/img/admin/<%=admins.foto%>" alt="Selecione uma imagem" id="imgPhoto">
-                                    <% }else{ %>
-                                        <img src="/img/fotoAdmin.png" alt="Selecione uma imagem" id="imgPhoto">
-                                    <% } %> 
+                                    <img src="/img/fotoAdmin.png" id="imgPhoto">
                                 </div>
                             </div>
                         </div>
@@ -31,111 +22,111 @@
                         <hr>
                         <div class="g-2 row">
                             <div class="col-md">
+                                <label>Nome</label>
                                 <div class="form-floating">
-                                    <input type="text" name="primeiroNome" value="<%=admins.nome%>" placeholder=" " class="form-control" required>
-                                    <label>Nome</label>
+                                    <input type="text" name="primeiroNome" value="<%=admins.nome%>" placeholder=" " class="form-control" disabled required>
                                 </div>
                             </div>
                             <div class="col-md">
+                                <label>Sobrenome</label>
                                 <div class="form-floating">
-                                    <input type="text" name="sobrenome" value="<%=admins.sobrenome%>" placeholder=" " class="form-control" required>
-                                    <label>Sobrenome</label>
+                                    <input type="text" name="sobrenome" value="<%=admins.sobrenome%>" placeholder=" " class="form-control" disabled required>
                                 </div>     
                             </div>
                         </div>
                         <br>
                         <div class="g-2 row">
                             <div class="col-md">
+                                <label>CPF</label>
                                 <div class="form-floating">
                                     <input type="text" name="cpf" value="<%=admins.cpf%>" placeholder=" " id="cpf" class="form-control" required>
-                                    <label>CPF</label>
                                 </div>
                             </div>
                             <div class="col-md">
+                                <label>RG</label>
                                 <div class="form-floating">
                                     <input type="text" name="rg" value="<%=admins.rg%>" placeholder=" " id="rg" class="form-control" required>
-                                    <label>RG</label>
                                 </div>
                             </div>
                         </div>
                         <br>
                         <div class="g-2 row">
                             <div class="col-md">
+                                <label>CEP</label>
                                 <div class="form-floating">
                                     <input type="text" name="cep" placeholder=" " value="<%=admins.cep%>" id="cep" class="form-control" size="10" maxlength="9" onblur="pesquisacep(this.value);" required>
-                                    <label>CEP</label>
                                 </div>
                             </div>
                             <div class="col-md">
+                                <label>Rua</label>
                                 <div class="form-floating">
                                     <input type="text" name="rua" value="<%=admins.rua%>" placeholder=" " id="rua" class="form-control" required>
-                                    <label>Rua</label>
                                 </div>
                             </div>
                         </div>
                         <br>
                         <div class="g-3 row">
                             <div class="col-md">
+                                <label>Bairro</label>
                                 <div class="form-floating">
                                     <input type="text" name="bairro" placeholder=" " value="<%=admins.bairro%>" id="bairro" class="form-control" required>
-                                    <label>Bairro</label>
                                 </div>
                             </div>
                             <div class="col-md">
+                                <label>Cidade</label>
                                 <div class="form-floating">
                                     <input type="text" name="cidade" value="<%=admins.cidade%>" placeholder=" " id="cidade" class="form-control" required>
-                                    <label>Cidade</label>
                                 </div>
                             </div>
                             <div class="col-md">
+                                <label>Estado</label>
                                 <div class="form-floating">
                                     <input type="text" name="estado" placeholder=" " value="<%=admins.estado%>" id="uf" class="form-control" required>
-                                    <label>Estado</label>
                                 </div>
                             </div>
                         </div>
                         <br>
                         <div class="g-2 row">
                             <div class="col-md">
+                                <label>Data de Nascimento</label>
                                 <div class="form-floating">
                                     <input type="date" name="dataNascimento" value="<%=admins.dataNascimento%>" placeholder=" "class="form-control" required>
-                                    <label>Data de Nascimento</label>
                                 </div>
                             </div>
                             <div class="col-md">
+                                <label>E-mail</label>
                                 <div class="form-floating">
-                                    <input type="email" name="email" value="<%=admins.email%>" placeholder=" " class="form-control" required>
-                                    <label>E-mail</label>
+                                    <input type="email" name="email" value="<%=admins.email%>" placeholder=" " class="form-control" disabled required>
                                 </div>
                             </div>
                         </div>
                         <br>
                         <div class="g-2 row">
                             <div class="col-md">
+                                <label>Tipo de Usuário</label>
                                 <div class="form-floating">
                                     <input type="text" name="tipoUsuario" value="admin" class="form-control" disabled>
-                                    <label>Tipo de Usuário</label>
                                 </div>
                             </div>
                             <div class="col-md">
+                                <label>Celular</label>
                                 <div class="form-floating">
                                     <input type="text" name="celular" value="<%=admins.celular%>" id="cel" placeholder=" " class="form-control" required>
-                                    <label>Celular</label>
                                 </div>
                             </div>
                         </div>
                         <br>
                         <div class="g-2 row">
                             <div class="col-md">
+                                <label>Senha</label>
                                 <div class="form-floating">
                                     <input type="password" name="senha" value="<%=admins.senha%>" class="form-control" placeholder=" " required>
-                                    <label>Senha</label>
                                 </div>
                             </div>
                             <div class="col-md">
+                                <label>Confirme a senha</label>
                                 <div class="form-floating">
                                     <input type="password" name="confirmaSenha" value="<%=admins.senha%>" placeholder=" " class="form-control" required>
-                                    <label>Confirme a senha</label>
                                 </div>
                             </div>
                         </div>

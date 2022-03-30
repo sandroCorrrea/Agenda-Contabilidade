@@ -59,25 +59,21 @@ class Administrador extends Agenda{
         }
     }
 
-    CriaArquivoEdicao(id, res, modal, req){
-        if(isNaN(id)){
-            res.redirect('/admin/administradores');
-        }else{
-            modal.findOne({
-                where: {id: id}
-            }).then(admins => {
-                if (admins != undefined){
-                    res.render('administrador/admin/edit', {
-                        admins: admins,
-                        nomeAdministrador: req.session.admins.nome,
-                    })
-                }else{
-                    res.redirect('/admin/administradores');
-                }
-            }).catch(erro => {
-                console.log(erro);
-            });
-        };
+    CriaArquivoEdicao(res, modal, req){
+        modal.findOne({
+            where: {email: req.session.admins.email}
+        }).then(admins => {
+            if (admins != undefined){
+                res.render('administrador/admin/edit', {
+                    admins: admins,
+                    nomeAdministrador: req.session.admins.nome,
+                })
+            }else{
+                res.redirect('/admin/administradores');
+            }
+        }).catch(erro => {
+            console.log(erro);
+        });
     }
 
     EditaAdministrador(modal, res, req, id, nome, sobrenome, cpf, rg, cep, rua, bairro, cidade, estado, dataNascimento, email, tipoUsuario, celular, senha){
@@ -96,15 +92,15 @@ class Administrador extends Agenda{
                 modal.update({nome: nome, sobrenome: sobrenome, cpf: cpf, rg: rg, cep: cep, rua: rua, bairro: bairro, cidade: cidade, estado: estado, dataNascimento: dataNascimento, email: email, tipoUsuario: tipoUsuario, celular: celular, senha: hash, foto: img}, {
                     where:{id: id}
                 }).then(() => {
-                    res.redirect('/admin/administradores');
+                    res.redirect('/admin/editar');
                 }).catch(erro => {
                     console.log(erro);
                 })
             }else{
-                res.redirect('/admin/administradores');
+                res.redirect('/admin/editar');
             }
         }else{
-            res.redirect('/admin/administradores');
+            res.redirect('/admin/editar');
         }
     }
 
