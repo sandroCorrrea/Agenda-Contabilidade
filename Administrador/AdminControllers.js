@@ -19,27 +19,22 @@ var usuario = new UserCliente();
 var suporte = new SuporteClass();
 var email = new EmailSuporte();
 
-// ---------- CONFIGURANDO UPLOAD DE IMAGENS
-const storage = multer.diskStorage({
-    destination: function(req, file, cb) {
-        cb(null, "public/img/admin", )
-    },
-    filename: function(req, file, cb) {
-        cb(null, file.originalname.replace(".", "") + Date.now() + path.extname(file.originalname));
-    }
-});
-
-const upload = multer({ storage });
-
-// --------------- FIM DAS CONFIGURAÇÕES
-
 router.get('/admin/new', authAdmin, (req, res) => {
+
+    var cpfError   = req.flash("cpfError");
+    var emailError = req.flash("emailError");
+
+    cpfError   = (cpfError == undefined || cpfError.length == 0) ? undefined : cpfError = cpfError;
+    emailError = (emailError == undefined || emailError.length == 0) ? undefined : emailError = emailError;
+
     res.render('administrador/admin/new', {
         nomeAdministrador: req.session.admins.nome,
+        cpfError: cpfError,
+        emailError: emailError,
     });
 });
 
-router.post('/admin/new', authAdmin, upload.single("adminPerfil"), (req, res) => {
+router.post('/admin/new', authAdmin, (req, res) => {
     var { primeiroNome, sobrenome, cpf, rg, cep, rua, bairro, cidade, estado, dataNascimento, email, tipoUsuario, celular, senha, confirmaSenha } = req.body;
 
     administrador.InsereAdministrador(Admin, res, req, primeiroNome, sobrenome, cpf, rg, cep, rua, bairro, cidade, estado, dataNascimento, email, tipoUsuario, celular, senha);
@@ -72,7 +67,7 @@ router.get('/admin/editar', authAdmin, (req, res) => {
     administrador.CriaArquivoEdicao(res, Admin, req);
 });
 
-router.post('/admin/edit', authAdmin, upload.single("adminPerfil"), (req, res) => {
+router.post('/admin/edit', authAdmin, (req, res) => {
 
     var { primeiroNome, sobrenome, cpf, rg, cep, rua, bairro, cidade, estado, dataNascimento, email, tipoUsuario, celular, senha, confirmaSenha, id } = req.body;
 

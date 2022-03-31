@@ -16,27 +16,49 @@ class Administrador extends Agenda{
         if (tipoUsuario == null || tipoUsuario == undefined || tipoUsuario == "") {
             tipoUsuario = "admin";
         }
-    
-        modal.create({
-            foto:           img,
-            nome:           nome,
-            sobrenome:      sobrenome,
-            cpf:            cpf,
-            rg:             rg,
-            cep:            cep,
-            rua:            rua,
-            bairro:         bairro,
-            cidade:         cidade,
-            estado:         estado,
-            dataNascimento: dataNascimento,
-            email:          email,
-            tipoUsuario:    tipoUsuario,
-            celular:        celular,
-            senha:          hash,
-        }).then(() => {
-            res.redirect('/admin/administradores');
-        }).catch(erro => {
-            console.log(erro);
+
+        modal.findOne({
+            where:{cpf: cpf}
+        }).then(adminCadastrado => {
+            if(adminCadastrado != undefined){
+                var cpfError;
+                cpfError = "Esse CPF já foi cadastrado!";
+                req.flash("cpfError", cpfError);
+                res.redirect('/admin/new');
+            }else{
+                modal.findOne({
+                    where:{email: email}
+                }).then(adminEmail => {
+                    if(adminEmail != undefined){
+                        var emailError;
+                        emailError = "Esse E-mail já foi cadastrado!";
+                        req.flash("emailError", emailError);
+                        res.redirect('/admin/new');
+                    }else{
+                        modal.create({
+                            foto:           img,
+                            nome:           nome,
+                            sobrenome:      sobrenome,
+                            cpf:            cpf,
+                            rg:             rg,
+                            cep:            cep,
+                            rua:            rua,
+                            bairro:         bairro,
+                            cidade:         cidade,
+                            estado:         estado,
+                            dataNascimento: dataNascimento,
+                            email:          email,
+                            tipoUsuario:    tipoUsuario,
+                            celular:        celular,
+                            senha:          hash,
+                        }).then(() => {
+                            res.redirect('/admin/administradores');
+                        }).catch(erro => {
+                            console.log(erro);
+                        });
+                    }
+                });
+            }
         });
     }
 
