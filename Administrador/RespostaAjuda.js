@@ -15,6 +15,6 @@ const RespostaAjuda = database.define('resposta_ajuda_user', {
 
 RespostaAjuda.belongsTo(Pergunta);
 
-//RespostaAjuda.sync({force: false});
+RespostaAjuda.sync({force: false});
 
 module.exports = RespostaAjuda;

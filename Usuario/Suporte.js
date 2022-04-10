@@ -24,6 +24,6 @@ const Suporte = database.define('suporte_cliente', {
     }
 });
 
-//Suporte.sync({force: false});
+Suporte.sync({force: false});
 
 module.exports = Suporte;

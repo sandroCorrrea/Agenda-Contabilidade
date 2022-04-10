@@ -14,11 +14,15 @@ const solicitaServico = database.define('solicita_servico_auxiliar', {
     status:{
         type: sequelize.STRING,
         allowNull: false,
-    }
+    },
+    responsal_resposta:{
+        allowNull: false,
+        type: sequelize.STRING,
+    },
 });
 
 solicitaServico.belongsTo(Cliente);
 
-//solicitaServico.sync({force: true});
+solicitaServico.sync({force: false});
 
 module.exports = solicitaServico;
