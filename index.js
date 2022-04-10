@@ -51,7 +51,9 @@ app.use('/', adminController);
 app.use('/', postController);
 app.use('/', userController);
 
-app.listen(4000, (erro) => {
+const port = process.env.PORT || 8080;
+
+app.listen(port, (erro) => {
     if (erro)
     {
         console.log("ERRO!");
