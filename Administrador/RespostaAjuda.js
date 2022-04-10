@@ -10,7 +10,11 @@ const RespostaAjuda = database.define('resposta_ajuda_user', {
     resposta:{
         type: sequelize.STRING,
         allowNull: false,
-    }
+    },
+    responsavel_resposta:{
+        type: sequelize.STRING,
+        allowNull: false,
+    },
 });
 
 RespostaAjuda.belongsTo(Pergunta);
