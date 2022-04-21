@@ -72,7 +72,7 @@ router.get('/admin/editar', authAdmin, (req, res) => {
 router.post('/admin/edit', authAdmin, (req, res) => {
 
     var { primeiroNome, sobrenome, cpf, rg, cep, rua, bairro, cidade, estado, dataNascimento, email, tipoUsuario, celular, senha, confirmaSenha, id } = req.body;
-
+    
     administrador.EditaAdministrador(Admin, res, req, id, primeiroNome, sobrenome, cpf, rg, cep, rua, bairro, cidade, estado, dataNascimento, email, tipoUsuario, celular, senha);
 });
 

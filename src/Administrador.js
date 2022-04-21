@@ -99,19 +99,19 @@ class Administrador extends Agenda{
     }
 
     EditaAdministrador(modal, res, req, id, nome, sobrenome, cpf, rg, cep, rua, bairro, cidade, estado, dataNascimento, email, tipoUsuario, celular, senha){
-        if (req.file == undefined || req.file == null || req.file.originalname == " ") {
-            // QUER DIZER QUE NÃO EXISTE IMAGEM
-            var img = false;
-        }else{
-            // QUER DIZER QUE EXISTE IMAGEM
-            var img = req.file.filename;
-        }
+        // if (req.file == undefined || req.file == null || req.file.originalname == " ") {
+        //     // QUER DIZER QUE NÃO EXISTE IMAGEM
+        //     var img = false;
+        // }else{
+        //     // QUER DIZER QUE EXISTE IMAGEM
+        //     var img = req.file.filename;
+        // }
         
-        var hash = this.GeraHashDaSenha(senha);
+        //var hash = this.GeraHashDaSenha(senha);
 
         if (!isNaN(id)) {
             if(id != undefined){
-                modal.update({nome: nome, sobrenome: sobrenome, cpf: cpf, rg: rg, cep: cep, rua: rua, bairro: bairro, cidade: cidade, estado: estado, dataNascimento: dataNascimento, email: email, tipoUsuario: tipoUsuario, celular: celular, senha: hash, foto: img}, {
+                modal.update({nome: nome, sobrenome: sobrenome, cpf: cpf, rg: rg, cep: cep, rua: rua, bairro: bairro, cidade: cidade, estado: estado, dataNascimento: dataNascimento, email: email, tipoUsuario: tipoUsuario, celular: celular, senha: senha, foto: 0}, {
                     where:{id: id}
                 }).then(() => {
                     res.redirect('/admin/editar');
