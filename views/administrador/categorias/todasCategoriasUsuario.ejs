@@ -20,14 +20,14 @@
               </li>
               <li class="me-auto">
                 <hr>
-                <form method="post" action="/admin/categoria/cliente/excluir" style="display: inline;" onsubmit="confirmaExclusao(event)">
-                    <button class="btn btn-danger" value="<%=categoria.id%>" name="id">
-                        <i class="bi bi-trash"></i>               Excluir
-                    </button>
-                </form>
                 <a class="btn btn-warning" href="/admin/categoria/cliente/<%=categoria.id%> ">
                     <i class="bi bi-pencil-square"></i>       Editar
                 </a>
+                <!-- <form method="post" action="/admin/categoria/cliente/excluir" style="display: inline;" onsubmit="confirmaExclusao(event)">
+                    <button class="btn btn-danger" value="<%=categoria.id%>" name="id">
+                        <i class="bi bi-trash"></i>               Excluir
+                    </button>
+                </form> -->
               </li>
             </ul>
           </div>
