@@ -8,6 +8,6 @@ const Email = database.define('email_interesse', {
     }
 });
 
-Email.sync({force: false});
+//Email.sync({force: false});
 
 module.exports = Email;
