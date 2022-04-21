@@ -12,12 +12,14 @@ const RespSuporte = require('./RespostaAjuda');
 const SuporteClass = require('../src/Suporte');
 const EmailSuporte = require('../src/Email');
 const authAdmin = require('../middlewares/adminAuth');
+const QueryDatabase = require('../database/query');
 // INSTÂNCIAS USADAS
 var administrador = new AdminAgenda();
 var agenda = new Agenda();
 var usuario = new UserCliente();
 var suporte = new SuporteClass();
 var email = new EmailSuporte();
+var querySql = new QueryDatabase();
 
 router.get('/admin/new', authAdmin, (req, res) => {
 
@@ -131,7 +133,7 @@ router.post('/admin/delete/cliente', authAdmin, (req, res) => {
 
 router.get('/admin/suporte/cliente', authAdmin, (req, res) => {
 
-    const connectionDatabase = suporte.conectaBanco();
+    const connectionDatabase = querySql.conectaBanco();
 
     connectionDatabase.connect(erro => {
         if(erro){
