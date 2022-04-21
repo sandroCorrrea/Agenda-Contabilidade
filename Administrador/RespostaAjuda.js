@@ -1,24 +1,22 @@
-const database  = require('../database/database');
-const sequelize = require('sequelize');
-const Pergunta  = require('../Usuario/Suporte');
+const database      = require('../database/database');
+const sequelize     = require('sequelize');
+const Pergunta      = require('../Usuario/Suporte');
+const Administrador = require('../Administrador/Administrador');
 
 const RespostaAjuda = database.define('resposta_ajuda_user', {
     email:{
         type: sequelize.STRING,
-        allowNull: false
+        allowNull: true
     },
     resposta:{
         type: sequelize.STRING,
-        allowNull: false,
-    },
-    responsavel_resposta:{
-        type: sequelize.STRING,
-        allowNull: false,
-    },
+        allowNull: true,
+    }
 });
 
 RespostaAjuda.belongsTo(Pergunta);
+RespostaAjuda.belongsTo(Administrador);
 
-RespostaAjuda.sync({force: false});
+//RespostaAjuda.sync({force: true});
 
 module.exports = RespostaAjuda;
