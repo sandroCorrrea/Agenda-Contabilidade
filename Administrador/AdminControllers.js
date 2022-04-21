@@ -174,11 +174,19 @@ router.get('/admin/suporte/cliente', authAdmin, (req, res) => {
                 if(erro){
                     console.log(erro);
                 }
-                res.render('administrador/suporteCliente/show', {
-                    suportes: suportes,
-                    agenda: agenda,
-                    respostas: respostas,
-                    nomeAdministrador: req.session.admins.nome,
+                // VAMOS PROCURAR O ID DO ADMIN LOGADA PARA MANDARMOS PARA A VIEW
+                Admin.findOne({
+                    where:{email: req.session.admins.email}
+                }).then(adminLogado => {
+                    if(adminLogado != undefined){
+                        res.render('administrador/suporteCliente/show', {
+                            suportes: suportes,
+                            agenda: agenda,
+                            respostas: respostas,
+                            nomeAdministrador: req.session.admins.nome,
+                            idAdmin:adminLogado.id
+                        });
+                    }
                 });
             });
         });
@@ -186,9 +194,9 @@ router.get('/admin/suporte/cliente', authAdmin, (req, res) => {
 });
 
 router.post('/admin/suporte/cliente', authAdmin, (req, res) => {
-    var { id, resposta, emailDestinatario, primeiroNome, pergunta } = req.body;
+    var { id, resposta, emailDestinatario, primeiroNome, pergunta, administradoreId} = req.body;
     // CADASTRAMOS A RESPOSTA E MANDAMOS UM EMAIL COM A MESMSA
-    suporte.CadastraRespostaSuporte(RespSuporte, res, "/admin/suporte/cliente", id, emailDestinatario, resposta);
+    suporte.CadastraRespostaSuporte(RespSuporte, res, "/admin/suporte/cliente", id, emailDestinatario, resposta, administradoreId);
 
     email.EnviaEmailSuporte(emailDestinatario, resposta, primeiroNome, pergunta);
 });

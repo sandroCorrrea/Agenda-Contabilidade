@@ -29,11 +29,12 @@ class Suporte{
         });
     }
 
-    CadastraRespostaSuporte(modal, res, rota, idPerguntaSuporte, emailUser, respostaUser){
+    CadastraRespostaSuporte(modal, res, rota, idPerguntaSuporte, emailUser, respostaUser, idAdministrador){
         modal.create({
             email            : emailUser,
             resposta         : respostaUser,
-            suporteClienteId : idPerguntaSuporte
+            suporteClienteId : idPerguntaSuporte,
+            administradoreId: idAdministrador
         }).then(() => {
             res.redirect(rota);
         }).catch(erro => {

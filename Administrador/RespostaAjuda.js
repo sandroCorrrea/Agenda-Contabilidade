@@ -17,6 +17,6 @@ const RespostaAjuda = database.define('resposta_ajuda_user', {
 RespostaAjuda.belongsTo(Pergunta);
 RespostaAjuda.belongsTo(Administrador);
 
-//RespostaAjuda.sync({force: true});
+RespostaAjuda.sync({force: false});
 
 module.exports = RespostaAjuda;

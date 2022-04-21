@@ -20,6 +20,6 @@ const Servico = connection.define('servico', {
 
 Servico.belongsTo(Categoria);
 Servico.belongsTo(ClienteCategoria);
-//Servico.sync({force: false});
+Servico.sync({force: false});
 
 module.exports = Servico;

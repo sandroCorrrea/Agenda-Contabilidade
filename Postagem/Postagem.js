@@ -20,6 +20,6 @@ const Postagem = connection.define('postagens', {
     }
 });
 
-//Postagem.sync({force: false});
+Postagem.sync({force: false});
 
 module.exports = Postagem;

@@ -19,6 +19,6 @@ const solicitaServico = database.define('solicita_servico_auxiliar', {
 
 solicitaServico.belongsTo(Cliente);
 
-//solicitaServico.sync({force: false});
+solicitaServico.sync({force: false});
 
 module.exports = solicitaServico;
