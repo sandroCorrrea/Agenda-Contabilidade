@@ -6,7 +6,7 @@ class QueryDatabase{
         const connectionDatabase = mysql.createConnection({
             host: 'localhost',
             user: 'root',
-            password: '',
+            password: 'scrj123456',
             database: 'agenda'
         });
     

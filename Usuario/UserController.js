@@ -269,6 +269,8 @@ router.post('/cadastro', (req, res) => {
 // PARTE DE CLIENTES PARA O ADMINISTRADOR
 router.get('/admin/clientes', authAdmin, (req, res) => {
 
+    var nomeAdministrador = req.session.admins.nome;
+
     var senhaError = req.flash("senhaError");
 
     senhaError = (senhaError == undefined || senhaError.length == 0) ? undefined : senhaError = senhaError;
@@ -289,7 +291,8 @@ router.get('/admin/clientes', authAdmin, (req, res) => {
                             administradores: administradores,
                             agenda: agenda,
                             categorias: categorias,
-                            senhaError: senhaError
+                            senhaError: senhaError,
+                            nomeAdministrador: nomeAdministrador,
                         });
                     } else {
                         res.redirect('/admin/clientes');
